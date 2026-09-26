@@ -248,6 +248,24 @@
     m.parentElement.addEventListener('pointerleave', function () { gsap.to(m, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.4)' }); });
   });
 
+  /* Horizontal screen galleries: pinned and driven by vertical scroll */
+  var wideScreen = window.matchMedia('(min-width: 821px) and (hover: hover)').matches;
+  document.querySelectorAll('.gallery').forEach(function (g) {
+    var rail = g.querySelector('.rail');
+    if (!rail || !wideScreen) return;
+    function dist() { return Math.max(0, rail.scrollWidth - window.innerWidth); }
+    gsap.to(rail, { x: function () { return -dist(); }, ease: 'none', scrollTrigger: { trigger: g, start: 'center center', end: function () { return '+=' + dist(); }, pin: true, scrub: 0.7, invalidateOnRefresh: true, anticipatePin: 1 } });
+  });
+
+  /* Highlight numbers count up */
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var end = parseFloat(el.getAttribute('data-count')), o = { v: 0 };
+    var suffix = el.getAttribute('data-suffix') || '';
+    ST.create({ trigger: el, start: 'top 88%', once: true, onEnter: function () {
+      gsap.to(o, { v: end, duration: 1.4, ease: 'power3.out', onUpdate: function () { el.firstChild.nodeValue = Math.round(o.v) + suffix; } });
+    } });
+  });
+
   /* Recalculate once web fonts land */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); });
 })();

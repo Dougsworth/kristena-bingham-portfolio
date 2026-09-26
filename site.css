@@ -206,3 +206,39 @@ blockquote footer { margin-top: 12px; }
 .case-hero .mono:first-child { color: var(--accent); }
 .next-steps .mono, .shot figcaption .mono { color: var(--accent); }
 @media (max-width: 820px) { .facts-fun div { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+
+/* Highlights */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 48px; }
+.stat { padding: 26px 20px 24px 0; display: grid; gap: 8px; align-content: start; }
+.stat + .stat { padding-left: 20px; border-left: 1px solid var(--rule); }
+.stat .num { font-family: var(--display); font-weight: 800; font-size: clamp(44px, 5.4vw, 84px); line-height: 0.9; color: var(--ink); letter-spacing: -0.03em; font-variation-settings: "wdth" 112; font-variant-numeric: tabular-nums; }
+.stat .num em { font-style: normal; color: var(--accent); }
+.stat p { font-size: 15px; color: var(--body); max-width: 22ch; }
+
+/* Design decisions */
+.decisions { padding-block: clamp(72px, 10vw, 130px) 20px; }
+.decisions .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(28px, 5vw, 80px); margin-top: 22px; }
+.decision { border-top: 1px solid var(--rule); padding-block: 26px 30px; display: grid; gap: 10px; }
+.decision h3 { font-size: clamp(24px, 2.4vw, 34px); line-height: 1.05; letter-spacing: -0.02em; font-variation-settings: "wdth" 108; }
+.decision p { max-width: 50ch; }
+
+/* Horizontal screen gallery */
+.gallery { position: relative; overflow: hidden; padding-block: 24px; }
+.gallery .rail { display: flex; gap: clamp(20px, 3vw, 44px); padding-inline: var(--gutter); width: max-content; will-change: transform; }
+.gallery .item { margin: 0; display: grid; gap: 14px; align-content: start; }
+.gallery .item img { border-radius: 6px; display: block; }
+.gallery.phones .item img { height: min(72vh, 700px); width: auto; border-radius: 26px; border: 1px solid var(--rule); }
+.gallery.wide .item img { width: min(74vw, 1180px); height: auto; }
+.gallery .item figcaption { display: flex; gap: 12px; align-items: baseline; max-width: 44ch; color: var(--ink); font-size: 15px; }
+.gallery .item figcaption .mono { color: var(--accent); flex-shrink: 0; }
+.gallery-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; }
+@media (max-width: 820px), (hover: none) {
+  .gallery { overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+  .gallery .item { scroll-snap-align: center; }
+  .gallery.phones .item img { height: 520px; }
+  .gallery.wide .item img { width: 86vw; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .decisions .grid { grid-template-columns: minmax(0, 1fr); }
+}
