@@ -40,8 +40,14 @@
   var curtain = document.querySelector('.curtain');
   var loader = document.querySelector('.loader');
 
+  var navigating = false;
+  function hideCurtain() {
+    if (!curtain) return;
+    if (window.gsap) window.gsap.set(curtain, { y: 0, yPercent: 101 });
+    else curtain.style.transform = 'translateY(101%)';
+  }
   window.addEventListener('pageshow', function (e) {
-    if (e.persisted && curtain) { curtain.style.transform = 'translateY(100%)'; }
+    if (e.persisted) { navigating = false; hideCurtain(); }
   });
 
   if (!window.gsap || reduced) {
@@ -55,6 +61,14 @@
   var gsap = window.gsap;
   gsap.registerPlugin(window.ScrollTrigger, window.SplitText);
   var ST = window.ScrollTrigger;
+  /* Start the curtain off-screen using percentages only, so no pixel offset sneaks in */
+  hideCurtain();
+  /* Safety net: never leave the curtain covering the page */
+  setTimeout(function () {
+    if (!curtain || navigating) return;
+    var r = curtain.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < window.innerHeight) gsap.to(curtain, { yPercent: -101, duration: 0.6, ease: 'power3.inOut' });
+  }, 2600);
 
   /* Smooth, weighted scroll */
   var lenis = null;
@@ -92,10 +106,11 @@
     a.addEventListener('click', function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || !curtain) return;
       e.preventDefault();
+      navigating = true;
       var color = a.getAttribute('data-color') || '#7C5CFF';
       curtain.style.background = color;
       store(false, 'kb-curtain', color);
-      gsap.fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.75, ease: 'power4.inOut', onComplete: function () { window.location.href = a.href; } });
+      gsap.fromTo(curtain, { y: 0, yPercent: 101 }, { yPercent: 0, duration: 0.75, ease: 'power4.inOut', onComplete: function () { window.location.href = a.href; } });
     });
   });
 
@@ -133,8 +148,8 @@
     if (incoming && curtain) {
       store(false, 'kb-curtain', '');
       curtain.style.background = incoming;
-      gsap.set(curtain, { yPercent: 0 });
-      gsap.to(curtain, { yPercent: -100, duration: 0.9, ease: 'power4.inOut', delay: 0.05 });
+      gsap.set(curtain, { y: 0, yPercent: 0 });
+      gsap.to(curtain, { yPercent: -101, duration: 0.9, ease: 'power4.inOut', delay: 0.05 });
       gsap.delayedCall(0.35, entrance);
     } else {
       entrance();
@@ -265,6 +280,12 @@
       gsap.to(o, { v: end, duration: 1.4, ease: 'power3.out', onUpdate: function () { el.firstChild.nodeValue = Math.round(o.v) + suffix; } });
     } });
   });
+
+  /* Re-measure pinned sections whenever an image finishes loading */
+  var refreshTimer = null;
+  function queueRefresh() { clearTimeout(refreshTimer); refreshTimer = setTimeout(function () { ST.refresh(); }, 120); }
+  document.querySelectorAll('img').forEach(function (im) { if (!im.complete) im.addEventListener('load', queueRefresh, { once: true }); });
+  window.addEventListener('load', queueRefresh);
 
   /* Recalculate once web fonts land */
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ST.refresh(); });

@@ -228,7 +228,7 @@ blockquote footer { margin-top: 12px; }
 .gallery .item { margin: 0; display: grid; gap: 14px; align-content: start; }
 .gallery .item img { border-radius: 6px; display: block; }
 .gallery.phones .item img { height: min(72vh, 700px); width: auto; border-radius: 26px; border: 1px solid var(--rule); }
-.gallery.wide .item img { width: min(74vw, 1180px); height: auto; }
+.gallery.wide .item img { width: min(74vw, 1180px, calc((100vh - 170px) * 1.49)); height: auto; }
 .gallery .item figcaption { display: flex; gap: 12px; align-items: baseline; max-width: 44ch; color: var(--ink); font-size: 15px; }
 .gallery .item figcaption .mono { color: var(--accent); flex-shrink: 0; }
 .gallery-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; }
