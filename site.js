@@ -75,6 +75,15 @@
     });
   });
 
+  /* Nav tucks away while scrolling down, returns on the way up */
+  var navEl = document.querySelector('.nav');
+  if (navEl) {
+    ST.create({ start: 0, end: 'max', onUpdate: function (self) {
+      var hide = self.direction === 1 && self.scroll() > 140;
+      gsap.to(navEl, { yPercent: hide ? -110 : 0, duration: 0.45, ease: 'power3.out', overwrite: true });
+    } });
+  }
+
   /* Scroll progress hairline */
   gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
 
@@ -83,7 +92,7 @@
     a.addEventListener('click', function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || !curtain) return;
       e.preventDefault();
-      var color = a.getAttribute('data-color') || '#E9C46A';
+      var color = a.getAttribute('data-color') || '#7C5CFF';
       curtain.style.background = color;
       store(false, 'kb-curtain', color);
       gsap.fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.75, ease: 'power4.inOut', onComplete: function () { window.location.href = a.href; } });
@@ -210,7 +219,7 @@
     });
     list.addEventListener('pointerleave', function () {
       floater.classList.remove('on');
-      document.body.style.setProperty('--flood', '#0C0F14');
+      document.body.style.setProperty('--flood', '#0D0B14');
     });
   }
 

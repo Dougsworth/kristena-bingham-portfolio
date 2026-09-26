@@ -1,13 +1,15 @@
 /* Kristena Bingham — portfolio */
 :root {
-  --bg: #0C0F14;
-  --bg-2: #12161D;
+  --bg: #0D0B14;
+  --bg-2: #15121F;
   --ink: #EEECE6;
   --body: #C4C6CB;
-  --muted: #8A8F99;
-  --rule: rgba(238, 236, 230, 0.14);
-  --accent: #E9C46A;
-  --flood: #0C0F14;
+  --muted: #948FA8;
+  --rule: rgba(226, 220, 255, 0.14);
+  --accent: #B69CFF;
+  --violet: #7C5CFF;
+  --plum: #2A1B5E;
+  --flood: #0D0B14;
   --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --text: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -33,7 +35,7 @@ body {
 }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
-::selection { background: var(--accent); color: #0C0F14; }
+::selection { background: var(--violet); color: #FFFFFF; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 2px; }
 h1, h2, h3 { font-family: var(--display); color: var(--ink); margin: 0; font-weight: 800; line-height: 0.95; letter-spacing: -0.02em; text-wrap: balance; }
 p { margin: 0; }
@@ -45,10 +47,10 @@ p { margin: 0; }
 @keyframes grain { 0%{transform:translate(0,0)} 20%{transform:translate(-3%,2%)} 40%{transform:translate(2%,-3%)} 60%{transform:translate(-2%,-1%)} 80%{transform:translate(3%,3%)} 100%{transform:translate(0,0)} }
 
 /* Preloader + page curtain */
-.loader { position: fixed; inset: 0; z-index: 100; background: #0A0C10; display: flex; flex-direction: column; justify-content: space-between; padding: var(--gutter); }
+.loader { position: fixed; inset: 0; z-index: 100; background: #110C1F; display: flex; flex-direction: column; justify-content: space-between; padding: var(--gutter); }
 .loader .count { font-family: var(--display); font-weight: 800; font-size: clamp(80px, 18vw, 260px); line-height: 0.8; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: -0.04em; }
 .loader .who { display: flex; justify-content: space-between; }
-.curtain { position: fixed; inset: 0; z-index: 99; background: var(--accent); transform: translateY(100%); pointer-events: none; }
+.curtain { position: fixed; inset: 0; z-index: 99; background: var(--violet); transform: translateY(100%); pointer-events: none; }
 html:not(.js) .loader, html.reduced .loader { display: none; }
 
 /* Nav */
@@ -65,7 +67,7 @@ html:not(.js) .loader, html.reduced .loader { display: none; }
 /* Cursor */
 .cursor { position: fixed; top: 0; left: 0; z-index: 80; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--ink); pointer-events: none; display: none; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #0C0F14; transition: width 0.35s var(--ease), height 0.35s var(--ease), margin 0.35s var(--ease), background-color 0.35s; }
 .cursor span { opacity: 0; transition: opacity 0.2s; }
-.cursor.big { width: 84px; height: 84px; margin: -42px 0 0 -42px; }
+.cursor.big { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--accent); }
 .cursor.big span { opacity: 1; }
 @media (pointer: fine) { .cursor { display: flex; } }
 
@@ -138,7 +140,7 @@ blockquote footer { margin-top: 12px; }
 .contact h2 { font-size: clamp(64px, 15vw, 260px); text-transform: uppercase; letter-spacing: -0.05em; font-variation-settings: "wdth" 120; line-height: 0.82; }
 .contact .row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; margin-top: 48px; }
 .email { font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3vw, 40px); color: var(--ink); text-decoration: none; letter-spacing: -0.01em; overflow-wrap: anywhere; }
-.magnet { display: inline-flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 50%; background: var(--accent); color: #0C0F14; border: 0; font: 600 15px var(--text); cursor: pointer; will-change: transform; }
+.magnet { display: inline-flex; align-items: center; justify-content: center; width: 150px; height: 150px; border-radius: 50%; background: var(--accent); color: #140E26; border: 0; font: 600 15px var(--text); cursor: pointer; will-change: transform; }
 .footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 60px 32px; }
 .footer a { text-decoration: none; }
 
@@ -187,3 +189,20 @@ blockquote footer { margin-top: 12px; }
   .js .clip { clip-path: none; }
   body { transition: none; }
 }
+
+/* Purple accents */
+.hl { color: var(--accent); }
+.dot { color: var(--violet); }
+.scroll-cue i::after { background: var(--accent); }
+.hero .meta .fav { color: var(--accent); }
+.skills dt { color: var(--ink); }
+.facts-fun { display: grid; margin-top: 36px; }
+.facts-fun div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; padding-block: 14px; border-top: 1px solid var(--rule); }
+.facts-fun dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); padding-top: 3px; }
+.facts-fun dd { margin: 0; color: var(--ink); }
+.swatches { display: inline-flex; gap: 4px; vertical-align: middle; margin-left: 10px; }
+.swatches i { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.footer .made { color: var(--accent); }
+.case-hero .mono:first-child { color: var(--accent); }
+.next-steps .mono, .shot figcaption .mono { color: var(--accent); }
+@media (max-width: 820px) { .facts-fun div { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
