@@ -5,7 +5,7 @@ Static site: plain HTML, CSS and JS with GSAP, ScrollTrigger, SplitText and Leni
 ## Structure
 
 ```
-index.html            Home: intro, selected work, approach, contact
+index.html            Home: intro, selected work, approach, about, contact
 followup.html         Case study: FollowUp
 commute.html          Case study: Kingston Commute
 rentscope.html        Case study: RentScope
@@ -27,7 +27,7 @@ Each case study's images live in its own folder under `assets/images/`. Not on t
 
 1. Copy one of the case study pages, e.g. `rentscope.html` to `newproject.html`.
 2. Put its images in `assets/images/newproject/`.
-3. Add it to the list under "Selected work" in `index.html`, and point the previous case study's "Next" link at it.
+3. Add it to the list under "Selected work" in `index.html`. The case studies link to each other in a loop through their "Next" links (FollowUp, Commute, RentScope, E-commerce, back to FollowUp), so slot the new one in there.
 
 ## Deploy
 
