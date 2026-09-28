@@ -1,4 +1,16 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/commute-s:n(\\d).jpg",
+      "destination": "/assets/images/commute/screen-:n.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/:project(commute|followup|rentscope)-:name.jpg",
+      "destination": "/assets/images/:project/:name.jpg",
+      "permanent": true
+    }
+  ]
 }
