@@ -14,6 +14,7 @@ ecommerce.html        Case study: E-commerce Platform
 assets/
   css/site.css        All styles
   js/site.js          Motion, page transitions, galleries, cursor
+  js/demos.js         Working sketches on the case study pages (one-line log, trip sort, fair-price check)
   js/vendor/          GSAP, ScrollTrigger, SplitText, Lenis (minified)
   images/
     followup/         log, mobile, reports, today, phone
@@ -21,7 +22,13 @@ assets/
     rentscope/        compare, explore, listing, report
 ```
 
-Each case study's images live in its own folder under `assets/images/`. Not on the site yet: `commute/fares.jpg`, `commute/routes.jpg` and `followup/phone.jpg`.
+Each case study's images live in its own folder under `assets/images/`. Not on the site yet: `followup/phone.jpg`.
+
+## Case study layout
+
+Each case study opens with the hero, a status line (what's done, and why there's no live link) and a contents row. The rest is numbered chapters: the problem, who it's for, how it works, a screen-by-screen walkthrough with numbered markers on each screen, a small working sketch, key decisions, visual language, and status with what to test next.
+
+Walkthrough markers are placed with `--x` and `--y` as percentages of the screen image, so they stay put at any width.
 
 ## Adding a case study
 
