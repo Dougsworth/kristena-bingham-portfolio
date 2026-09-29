@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FollowUp prototype · Kristena Bingham</title>
+<meta name="description" content="A working prototype of FollowUp, a small-team CRM, built from the Figma screens. Sample data.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#EDF0F7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233447B0' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h12M10 7l5 5-5 5M20 5v14'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/prototypes/followup/app.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M3 12h12M10 7l5 5-5 5M20 5v14"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M8.6 3.5H5.8a1.8 1.8 0 0 0-1.8 2c.5 7.6 6.9 14 14.5 14.5a1.8 1.8 0 0 0 2-1.8v-2.8a1.5 1.5 0 0 0-1.1-1.4l-2.9-.8a1.5 1.5 0 0 0-1.5.4l-1.2 1.2a12 12 0 0 1-5.1-5.1l1.2-1.2a1.5 1.5 0 0 0 .4-1.5l-.8-2.9a1.5 1.5 0 0 0-1.4-1.1z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.6 19.4l1-3.6A7.8 7.8 0 1 1 8.4 18.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 7l8 6 8-6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
+    <symbol id="i-meet" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  </defs>
+</svg>
+
+<div class="strip">
+  <p class="strip-l"><span class="lg">FollowUp · Working prototype · Sample data</span><span class="sm">Prototype · Sample data</span></p>
+  <p class="strip-r"><button type="button" class="textbtn" data-act="reset"><span class="lg">Reset demo</span><span class="sm">Reset</span></button><a href="/followup"><span class="lg">Back to case study</span><span class="sm">Case study</span></a></p>
+</div>
+
+<div class="page">
+  <div class="app" id="app">
+    <header class="mtop">
+      <p class="logo"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span>FollowUp</span></p>
+      <button type="button" class="menubtn" data-act="menu" aria-expanded="false" aria-controls="side"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg><span data-menu-label>Today</span></button>
+    </header>
+
+    <nav class="side" id="side" aria-label="FollowUp">
+      <div class="side-top">
+        <p class="logo side-logo"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span>FollowUp</span></p>
+        <button type="button" class="side-close textbtn" data-act="menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg><span>Close</span></button>
+      </div>
+      <ul class="nav">
+        <li><button type="button" data-nav="today"><span>Today</span><span class="n" data-count="today"></span></button></li>
+        <li><button type="button" data-nav="upcoming"><span>Upcoming</span><span class="n" data-count="upcoming"></span></button></li>
+        <li><button type="button" data-nav="clients"><span>Clients</span><span class="n" data-count="clients"></span></button></li>
+        <li><button type="button" data-nav="reports"><span>Reports</span></button></li>
+      </ul>
+      <p class="eyebrow side-team">Team</p>
+      <ul class="nav team">
+        <li><button type="button" data-team="you"><span>You</span><span class="n" data-count="you"></span></button></li>
+        <li><button type="button" data-team="shanice"><span>Shanice Morgan</span><span class="n" data-count="shanice"></span></button></li>
+        <li><button type="button" data-team="andre"><span>Andre Campbell</span><span class="n" data-count="andre"></span></button></li>
+      </ul>
+      <button type="button" class="settings-link" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Settings</span></button>
+    </nav>
+
+    <main class="main" id="main" tabindex="-1"></main>
+
+    <aside class="panel" id="panel" aria-label="Client details"></aside>
+  </div>
+</div>
+
+<dialog class="dlg dlg-log" id="logDlg" aria-labelledby="logTitle">
+  <form class="log" id="logForm" novalidate>
+    <div class="log-top">
+      <div class="log-bar">
+        <p class="eyebrow" id="logTitle">New follow-up</p>
+        <button type="button" class="textbtn log-x" data-act="log-cancel">Cancel</button>
+      </div>
+      <div class="log-line">
+        <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>
+        <div class="hl">
+          <div class="hl-mirror" id="logMirror" aria-hidden="true"></div>
+          <textarea id="logInput" rows="1" spellcheck="false" autocomplete="off" autocapitalize="sentences" aria-label="Follow-up in one line" aria-describedby="logHints" placeholder="Call Marsha about invoice 1042 Friday 10am"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="log-fields" id="logFields" aria-live="polite"></div>
+    <div class="log-also" id="logAlso"></div>
+    <div class="log-foot">
+      <p class="hints" id="logHints"><span>Enter save</span><span>Tab edit a field</span><span>Esc cancel</span></p>
+      <div class="acts">
+        <button type="button" class="btn" data-act="log-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save follow-up</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<dialog class="dlg dlg-client" id="clientDlg" aria-labelledby="clientTitle">
+  <form class="cform" id="clientForm" novalidate>
+    <div class="cform-head">
+      <p class="eyebrow" id="clientTitle">New client</p>
+    </div>
+    <div class="cform-body">
+      <label class="fld"><span>Name</span><input name="name" type="text" autocomplete="off" required placeholder="Joan Campbell-Clarke"></label>
+      <p class="err" id="clientErr" hidden>Add a name to continue.</p>
+      <label class="fld"><span>Company</span><input name="company" type="text" autocomplete="off" placeholder="Joan's Kitchen"></label>
+      <label class="fld"><span>Area</span><input name="area" type="text" autocomplete="off" list="areas" placeholder="Half Way Tree"></label>
+      <label class="fld"><span>Phone</span><input name="phone" type="tel" autocomplete="off" inputmode="tel" placeholder="876-555-0142"></label>
+      <label class="fld"><span>Owner</span>
+        <select name="owner"><option value="you">You</option><option value="shanice">Shanice Morgan</option><option value="andre">Andre Campbell</option></select>
+      </label>
+      <datalist id="areas"></datalist>
+    </div>
+    <div class="log-foot">
+      <p class="hints"><span>Enter save</span><span>Esc cancel</span></p>
+      <div class="acts">
+        <button type="button" class="btn" data-act="client-cancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add client</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/prototypes/followup/data.js"></script>
+<script src="/prototypes/followup/app.js"></script>
+</body>
+</html>
