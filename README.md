@@ -10,6 +10,7 @@ followup.html         Case study: FollowUp
 commute.html          Case study: Kingston Commute
 rentscope.html        Case study: RentScope
 ecommerce.html        Case study: E-commerce Platform
+prototypes/followup/  FollowUp as a working web app, at /prototypes/followup (sample data)
 
 assets/
   css/site.css        All styles
@@ -20,6 +21,7 @@ assets/
     followup/         log, mobile, reports, today, phone
     commute/          flow, screen-1 … screen-5, fares, routes
     rentscope/        compare, explore, listing, report
+    ecommerce/        cover, and the store journey: browse, product, cart, checkout, done (illustrations)
 ```
 
 Each case study's images live in its own folder under `assets/images/`. Not on the site yet: `followup/phone.jpg`.

@@ -440,3 +440,24 @@ html.reduced .gallery { overflow-x: auto; }
 .points.plain p { color: var(--ink); }
 @media (max-width: 820px) { .points.plain li { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
 @media (max-width: 820px) { .demo input[type="text"] { font-size: 18px; } }
+
+/* Live app link */
+.status-link { color: var(--accent); text-decoration: underline; text-decoration-color: rgba(182, 156, 255, 0.4); text-underline-offset: 4px; white-space: nowrap; transition: text-decoration-color 0.3s; }
+.status-link:hover, .status-link:focus-visible { text-decoration-color: var(--accent); }
+.launch { display: grid; gap: 14px; text-decoration: none; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding-block: clamp(28px, 4vw, 48px); margin-top: 18px; position: relative; overflow: hidden; }
+.launch .mono { color: var(--accent); position: relative; }
+.launch-title { position: relative; display: flex; align-items: baseline; justify-content: space-between; gap: 20px; font: 800 clamp(40px, 6.4vw, 104px)/0.9 var(--display); color: var(--ink); letter-spacing: -0.04em; text-transform: uppercase; font-variation-settings: "wdth" 104; transition: font-variation-settings 0.8s var(--ease); }
+.launch .arrow { color: var(--accent); font-weight: 400; transition: transform 0.6s var(--ease); }
+.launch::before { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.8s var(--ease); }
+.launch:hover .launch-title, .launch:focus-visible .launch-title { font-variation-settings: "wdth" 122; }
+.launch:hover .arrow, .launch:focus-visible .arrow { transform: translateX(10px); }
+.launch:hover::before, .launch:focus-visible::before { transform: scaleX(1); }
+
+/* Design to code */
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(24px, 4vw, 56px); }
+.pair > div { border-top: 1px solid var(--accent); padding-top: 18px; }
+.pair ul { list-style: none; margin: 14px 0 0; padding: 0; }
+.pair li { padding-block: 14px; border-bottom: 1px solid var(--rule); color: var(--ink); font-size: clamp(18px, 1.6vw, 22px); line-height: 1.35; font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; }
+.pair .mono { color: var(--accent); }
+@media (max-width: 820px) { .pair { grid-template-columns: minmax(0, 1fr); row-gap: 32px; } }
+@media (prefers-reduced-motion: reduce) { .launch-title, .launch .arrow, .launch::before { transition: none; } }
