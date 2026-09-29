@@ -5,7 +5,7 @@ Static site: plain HTML, CSS and JS with GSAP, ScrollTrigger, SplitText and Leni
 ## Structure
 
 ```
-index.html            Home: intro, selected work, approach, contact
+index.html            Home: intro, selected work, approach, ice breaker, about, contact
 followup.html         Case study: FollowUp
 commute.html          Case study: Kingston Commute
 rentscope.html        Case study: RentScope
@@ -15,6 +15,7 @@ prototypes/followup/  FollowUp as a working web app, at /prototypes/followup (sa
 assets/
   css/site.css        All styles
   js/site.js          Motion, page transitions, galleries, cursor
+  js/icebreaker.js    Home page ice breaker: spot the three problems on a task board
   js/demos.js         Working sketches on the case study pages (one-line log, trip sort, fair-price check)
   js/vendor/          GSAP, ScrollTrigger, SplitText, Lenis (minified)
   images/

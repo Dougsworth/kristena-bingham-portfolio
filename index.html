@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/assets/css/site.css?v=32d25f6a">
+<link rel="stylesheet" href="/assets/css/site.css?v=a6b0e0aa">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__kbReady)document.documentElement.classList.remove('js')},3500);</script>
 </head>
 <body>
@@ -81,6 +81,83 @@
 <section class="statement wrap" aria-label="Approach">
   <p class="big">Four years inside other people’s workflows showed me where tools break: tasks that never clear, hand-offs that land with the wrong person, answers nobody can find. <span class="hl">Now I design the fix.</span></p>
 </section>
+<section class="ice wrap" id="spot" aria-labelledby="spot-title">
+  <div class="ice-copy">
+    <div class="ice-intro">
+    <p class="mono reveal-up">An ice breaker</p>
+    <h2 id="spot-title" data-lines-scroll>Spot what’s broken</h2>
+    <p class="reveal-up">This board has the three problems I used to run into every week. Click anything that looks wrong.</p>
+    </div>
+    <div class="ice-progress">
+    <ol class="ice-slots reveal-up">
+      <li data-slot="1"><span class="mono">01</span><div><b>Something that won’t go away</b><p>Done, but never cleared. Finishing a task should take it off the list.</p></div></li>
+      <li data-slot="2"><span class="mono">02</span><div><b>Someone who shouldn’t have it</b><p>Handed to the wrong person. Nobody should approve their own leave.</p></div></li>
+      <li data-slot="3"><span class="mono">03</span><div><b>A message that leads nowhere</b><p>A notification with nowhere to go. It should name the task and open it.</p></div></li>
+    </ol>
+    <p class="ice-status reveal-up" aria-live="polite">0 of 3 found</p>
+    <div class="ice-actions reveal-up">
+      <button type="button" class="ice-text" data-ice="show">Show me</button>
+      <a class="ice-hi" href="mailto:bingham.kristina1@gmail.com?subject=I%20found%20all%20three" data-cursor="Email" hidden>Say hi <span aria-hidden="true">→</span></a>
+      <button type="button" class="ice-text" data-ice="reset" hidden>Start over</button>
+    </div>
+    </div>
+  </div>
+
+  <div class="ice-stage reveal-up">
+    <div class="board" data-state="broken">
+      <div class="board-head">
+        <div><b>Team tasks</b><span>Wednesday</span></div>
+        <span class="board-bell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><span class="board-count">1</span></span>
+      </div>
+
+      <button type="button" class="board-row board-note" data-bug="3">
+        <span class="mark" aria-hidden="true">3</span>
+        <span class="who">AC</span>
+        <span class="txt"><span class="broken-only">Andre mentioned you in a task</span><span class="fixed-only">Andre mentioned you in <b>“Send onboarding pack to Paul Wright”</b></span></span>
+        <span class="go"><span class="broken-only">View</span><span class="fixed-only">Open task</span></span>
+      </button>
+
+      <div class="board-list">
+        <p class="board-label">To do <span class="n" data-todo>4</span></p>
+        <button type="button" class="board-row task" data-bug="1">
+          <span class="mark" aria-hidden="true">1</span>
+          <span class="box on" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
+          <span class="txt"><span class="t done">Send March invoice to Brown’s Hardware</span><span class="m">You</span></span>
+          <span class="tag late">Overdue 3 days</span>
+        </button>
+        <button type="button" class="board-row task">
+          <span class="box" aria-hidden="true"></span>
+          <span class="txt"><span class="t">Confirm Thursday install with Kerry-Ann</span><span class="m">You</span></span>
+          <span class="tag">Today</span>
+        </button>
+        <button type="button" class="board-row task" data-bug="2">
+          <span class="mark" aria-hidden="true">2</span>
+          <span class="box" aria-hidden="true"></span>
+          <span class="txt"><span class="t">Approve Shanice’s leave request</span><span class="m"><span class="broken-only">Shanice Morgan</span><span class="fixed-only">You <s>Shanice Morgan</s></span></span></span>
+          <span class="tag">Today</span>
+        </button>
+        <button type="button" class="board-row task" data-target="onboarding">
+          <span class="box" aria-hidden="true"></span>
+          <span class="txt"><span class="t">Send onboarding pack to Paul Wright</span><span class="m">Andre Campbell</span></span>
+          <span class="tag">Tomorrow</span>
+        </button>
+      </div>
+
+      <div class="board-list">
+        <p class="board-label">Done <span class="n" data-done>1</span></p>
+        <div class="board-done" data-done-list>
+          <button type="button" class="board-row task is-done">
+            <span class="box on" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span>
+            <span class="txt"><span class="t done">Called Nadine Scott</span><span class="m">You</span></span>
+            <span class="tag">08:45</span>
+          </button>
+        </div>
+      </div>
+      <p class="board-miss" aria-hidden="true">Not that one</p>
+    </div>
+    <p class="ice-foot"><span class="hanko-mini" aria-hidden="true">済</span><span><b>済</b> (sumi) is the stamp Japanese offices use to mark something done. I studied Japanese at UWI.</span></p>
+  </div>
+</section>
 <section id="about" class="about wrap">
   <div class="bio">
     <p class="mono reveal-up">About</p>
@@ -132,5 +209,6 @@
 <script src="/assets/js/vendor/SplitText.min.js" defer></script>
 <script src="/assets/js/vendor/lenis.min.js" defer></script>
 <script src="/assets/js/site.js?v=3f7ff32a" defer></script>
+<script src="/assets/js/icebreaker.js?v=a34a50b8" defer></script>
 </body>
 </html>
