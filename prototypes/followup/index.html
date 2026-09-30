@@ -4,31 +4,43 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>FollowUp prototype · Kristena Bingham</title>
-<meta name="description" content="A working prototype of FollowUp, a small-team CRM, built from the Figma screens. Sample data.">
+<meta name="description" content="A working prototype of FollowUp, a CRM for small teams, built from the Figma screens. Sample data.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#EDF0F7">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233447B0' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12h12M10 7l5 5-5 5M20 5v14'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#FFFFFF">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%236739F5'/%3E%3Cg transform='translate(4.56 4.56) scale(.62)'%3E%3Cpath fill='%23fff' d='M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/prototypes/followup/app.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <symbol id="i-logo" viewBox="0 0 24 24"><path d="M3 12h12M10 7l5 5-5 5M20 5v14"/></symbol>
-    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M8.6 3.5H5.8a1.8 1.8 0 0 0-1.8 2c.5 7.6 6.9 14 14.5 14.5a1.8 1.8 0 0 0 2-1.8v-2.8a1.5 1.5 0 0 0-1.1-1.4l-2.9-.8a1.5 1.5 0 0 0-1.5.4l-1.2 1.2a12 12 0 0 1-5.1-5.1l1.2-1.2a1.5 1.5 0 0 0 .4-1.5l-.8-2.9a1.5 1.5 0 0 0-1.4-1.1z"/></symbol>
-    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.6 19.4l1-3.6A7.8 7.8 0 1 1 8.4 18.5z"/></symbol>
-    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 7l8 6 8-6"/></symbol>
-    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M5.6 18.4l1.8-1.8M16.6 7.4l1.8-1.8"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-    <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
-    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
-    <symbol id="i-meet" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-calendar-plus" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18M10 16h4M12 14v4"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/><path d="M15 3v6h6"/></symbol>
+    <symbol id="i-file-text" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8M16 17H8M10 9H8"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"/><rect x="2" y="6" width="14" height="12" rx="2"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4M22 5h-4"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-circle-minus" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M8 12h8"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
     <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
   </defs>
 </svg>
 
@@ -37,89 +49,85 @@
   <p class="strip-r"><button type="button" class="textbtn" data-act="reset"><span class="lg">Reset demo</span><span class="sm">Reset</span></button><a href="/followup"><span class="lg">Back to case study</span><span class="sm">Case study</span></a></p>
 </div>
 
-<div class="page">
-  <div class="app" id="app">
-    <header class="mtop">
-      <p class="logo"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span>FollowUp</span></p>
-      <button type="button" class="menubtn" data-act="menu" aria-expanded="false" aria-controls="side"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg><span data-menu-label>Today</span></button>
-    </header>
+<div class="app" id="app">
+  <header class="mtop">
+    <p class="logo"><svg class="logo-mark" width="28" height="28" viewBox="0 0 30 30" aria-hidden="true" focusable="false"><rect width="30" height="30" rx="8" fill="#6739F5"/><g transform="translate(5.7 5.7) scale(.775)"><path fill="#fff" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></g></svg><span>FollowUp</span></p>
+    <button type="button" class="menubtn" data-act="menu" aria-expanded="false" aria-controls="side"><svg class="ic" aria-hidden="true"><use href="#i-menu"/></svg><span data-menu-label>Home</span></button>
+  </header>
 
-    <nav class="side" id="side" aria-label="FollowUp">
-      <div class="side-top">
-        <p class="logo side-logo"><svg class="ic" aria-hidden="true"><use href="#i-logo"/></svg><span>FollowUp</span></p>
-        <button type="button" class="side-close textbtn" data-act="menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg><span>Close</span></button>
+  <nav class="side" id="side" aria-label="FollowUp">
+    <div class="side-top">
+      <p class="logo"><svg class="logo-mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true" focusable="false"><rect width="30" height="30" rx="8" fill="#6739F5"/><g transform="translate(5.7 5.7) scale(.775)"><path fill="#fff" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></g></svg><span>FollowUp</span></p>
+      <button type="button" class="side-close" data-act="menu" aria-label="Close menu"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <ul class="nav">
+      <li><button type="button" data-nav="home"><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg><span>Home</span></button></li>
+      <li><button type="button" data-nav="contacts"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span>Contacts</span></button></li>
+      <li><button type="button" data-nav="deals"><svg class="ic" aria-hidden="true"><use href="#i-briefcase"/></svg><span>Deals</span></button></li>
+      <li><button type="button" data-nav="reports"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span>Reports</span></button></li>
+    </ul>
+    <button type="button" class="nav-settings" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-settings"/></svg><span>Settings</span></button>
+  </nav>
+
+  <main class="main" id="main">
+    <div class="top">
+      <div class="search" id="search">
+        <svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="q" type="search" placeholder="Search contacts, deals, or notes…" aria-label="Search contacts, deals, or notes" autocomplete="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="qResults" aria-autocomplete="list">
+        <kbd class="search-k" aria-hidden="true">/</kbd>
+        <div class="qres" id="qResults" role="listbox" aria-label="Search results" hidden></div>
       </div>
-      <ul class="nav">
-        <li><button type="button" data-nav="today"><span>Today</span><span class="n" data-count="today"></span></button></li>
-        <li><button type="button" data-nav="upcoming"><span>Upcoming</span><span class="n" data-count="upcoming"></span></button></li>
-        <li><button type="button" data-nav="clients"><span>Clients</span><span class="n" data-count="clients"></span></button></li>
-        <li><button type="button" data-nav="reports"><span>Reports</span></button></li>
-      </ul>
-      <p class="eyebrow side-team">Team</p>
-      <ul class="nav team">
-        <li><button type="button" data-team="you"><span>You</span><span class="n" data-count="you"></span></button></li>
-        <li><button type="button" data-team="shanice"><span>Shanice Morgan</span><span class="n" data-count="shanice"></span></button></li>
-        <li><button type="button" data-team="andre"><span>Andre Campbell</span><span class="n" data-count="andre"></span></button></li>
-      </ul>
-      <button type="button" class="settings-link" data-nav="settings"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg><span>Settings</span></button>
-    </nav>
+      <button type="button" class="iconbtn" data-act="bell" aria-label="Reminders" aria-haspopup="true" aria-expanded="false"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span class="bell-dot" hidden></span></button>
+      <span class="me" role="img" aria-label="Signed in as Kristena Bingham">KB</span>
+    </div>
+    <div class="view" id="view" tabindex="-1"></div>
+  </main>
 
-    <main class="main" id="main" tabindex="-1"></main>
-
-    <aside class="panel" id="panel" aria-label="Client details"></aside>
-  </div>
+  <div class="scrim" data-act="panel-close" aria-hidden="true"></div>
+  <aside class="panel" id="panel" aria-label="Contact details" tabindex="-1"></aside>
 </div>
 
 <dialog class="dlg dlg-log" id="logDlg" aria-labelledby="logTitle">
   <form class="log" id="logForm" novalidate>
-    <div class="log-top">
-      <div class="log-bar">
-        <p class="eyebrow" id="logTitle">New follow-up</p>
-        <button type="button" class="textbtn log-x" data-act="log-cancel">Cancel</button>
-      </div>
-      <div class="log-line">
-        <svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>
-        <div class="hl">
-          <div class="hl-mirror" id="logMirror" aria-hidden="true"></div>
-          <textarea id="logInput" rows="1" spellcheck="false" autocomplete="off" autocapitalize="sentences" aria-label="Follow-up in one line" aria-describedby="logHints" placeholder="Call Marsha about invoice 1042 Friday 10am"></textarea>
-        </div>
-      </div>
-    </div>
+    <button type="button" class="log-cancel" data-act="log-cancel">Cancel</button>
+    <h2 class="log-title" id="logTitle">Log interaction</h2>
+    <label class="sr-only" for="logInput">What happened?</label>
+    <textarea class="log-input" id="logInput" rows="4" spellcheck="true" autocomplete="off" autocapitalize="sentences" aria-describedby="logHint" placeholder="Spoke with Dane about the new pricing. Send him a proposal and follow up next week."></textarea>
+    <div class="log-types" role="radiogroup" aria-label="Interaction type" id="logTypes"></div>
+    <p class="log-ai"><svg class="ic" aria-hidden="true"><use href="#i-sparkles"/></svg><span>AI will extract:</span></p>
     <div class="log-fields" id="logFields" aria-live="polite"></div>
     <div class="log-also" id="logAlso"></div>
-    <div class="log-foot">
-      <p class="hints" id="logHints"><span>Enter save</span><span>Tab edit a field</span><span>Esc cancel</span></p>
-      <div class="acts">
-        <button type="button" class="btn" data-act="log-cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary">Save follow-up</button>
-      </div>
-    </div>
+    <button type="submit" class="btn-primary log-save">Save to CRM</button>
+    <p class="log-hint" id="logHint">Enter to save · Shift+Enter for a new line · Esc to cancel</p>
   </form>
 </dialog>
 
-<dialog class="dlg dlg-client" id="clientDlg" aria-labelledby="clientTitle">
-  <form class="cform" id="clientForm" novalidate>
-    <div class="cform-head">
-      <p class="eyebrow" id="clientTitle">New client</p>
-    </div>
+<dialog class="dlg dlg-contact" id="contactDlg" aria-labelledby="contactTitle">
+  <form class="cform" id="contactForm" novalidate>
+    <button type="button" class="log-cancel" data-act="contact-cancel">Cancel</button>
+    <h2 class="log-title" id="contactTitle">New contact</h2>
     <div class="cform-body">
-      <label class="fld"><span>Name</span><input name="name" type="text" autocomplete="off" required placeholder="Joan Campbell-Clarke"></label>
-      <p class="err" id="clientErr" hidden>Add a name to continue.</p>
-      <label class="fld"><span>Company</span><input name="company" type="text" autocomplete="off" placeholder="Joan's Kitchen"></label>
-      <label class="fld"><span>Area</span><input name="area" type="text" autocomplete="off" list="areas" placeholder="Half Way Tree"></label>
-      <label class="fld"><span>Phone</span><input name="phone" type="tel" autocomplete="off" inputmode="tel" placeholder="876-555-0142"></label>
-      <label class="fld"><span>Owner</span>
-        <select name="owner"><option value="you">You</option><option value="shanice">Shanice Morgan</option><option value="andre">Andre Campbell</option></select>
-      </label>
+      <label class="fld"><span>Company</span><input name="org" type="text" autocomplete="off" required placeholder="Harbour Fitness"></label>
+      <p class="err" id="contactErr" hidden>Add a company or a name to continue.</p>
+      <div class="fld-2">
+        <label class="fld"><span>Contact name</span><input name="person" type="text" autocomplete="off" placeholder="Omari Pottinger"></label>
+        <label class="fld"><span>Title</span><input name="title" type="text" autocomplete="off" placeholder="Owner"></label>
+      </div>
+      <div class="fld-2">
+        <label class="fld"><span>Industry</span><input name="industry" type="text" autocomplete="off" placeholder="Fitness"></label>
+        <label class="fld"><span>Area</span><input name="area" type="text" autocomplete="off" list="areas" placeholder="Half Way Tree"></label>
+      </div>
+      <div class="fld-2">
+        <label class="fld"><span>Phone</span><input name="phone" type="tel" autocomplete="off" inputmode="tel" placeholder="876-555-0142"></label>
+        <label class="fld"><span>Website</span><input name="website" type="text" autocomplete="off" placeholder="harbourfitness.com"></label>
+      </div>
+      <div class="fld-2">
+        <label class="fld"><span>Owner</span><select name="owner"><option value="you">You</option><option value="daniel">Daniel Brooks</option><option value="maya">Maya Chen</option><option value="andre">Andre Grant</option></select></label>
+        <label class="fld"><span>Priority</span><select name="priority"><option>High</option><option selected>Medium</option><option>Low</option></select></label>
+      </div>
       <datalist id="areas"></datalist>
     </div>
-    <div class="log-foot">
-      <p class="hints"><span>Enter save</span><span>Esc cancel</span></p>
-      <div class="acts">
-        <button type="button" class="btn" data-act="client-cancel">Cancel</button>
-        <button type="submit" class="btn btn-primary">Add client</button>
-      </div>
-    </div>
+    <button type="submit" class="btn-primary log-save" id="contactSave">Add contact</button>
   </form>
 </dialog>
 

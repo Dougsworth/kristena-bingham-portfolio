@@ -2,111 +2,127 @@
 (function () {
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function money(n) { return 'J$' + Math.round(n).toLocaleString('en-US'); }
+  /* Amounts are in JMD and written the way the designs write them: $150,000 */
+  function money(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
-  /* ---------- FollowUp: the one-line log ---------- */
+  /* ---------- FollowUp: log an interaction in plain words ---------- */
   var log = document.querySelector('[data-demo="log"]');
   if (log) {
-    var input = log.querySelector('input');
+    var input = log.querySelector('textarea');
     var out = log.querySelector('.fields');
     var closes = log.querySelector('.closes');
+    var typeBtns = log.querySelectorAll('[data-type]');
+    var picked = null;
 
+    /* The same sample clients as the FollowUp screens, with the open task each one has */
     var clients = [
-      { first: 'Marsha', last: 'Brown', company: "Brown's Hardware", late: 'Call about invoice 1042', days: 2 },
-      { first: 'Devon', last: 'Clarke', late: 'Send revised quote', days: 1 },
-      { first: 'Kerry-Ann', last: 'Lewis' },
-      { first: 'Omar', last: 'Grant' },
-      { first: 'Tanya', last: 'Reid' },
-      { first: 'Nadine', last: 'Scott' },
-      { first: 'Paul', last: 'Wright' }
+      { name: 'Dane', company: 'Caribbean Tech Ltd', match: ['dane', 'mitchell', 'caribbean tech'], task: 'Call back – Caribbean Tech Ltd' },
+      { company: 'Island Supplies', match: ['island supplies'], task: 'Send proposal – Island Supplies' },
+      { name: 'J. Williams', match: ['williams'], task: 'Follow up – J. Williams' },
+      { company: 'Bluewave Media', match: ['bluewave'], task: 'Check contract – Bluewave Media' },
+      { name: 'K. Morgan', match: ['morgan'], task: 'Intro call – K. Morgan' },
+      { company: 'Palm Retail', match: ['palm retail'], task: 'Review quote – Palm Retail' }
     ];
-    var invoices = { '1042': { amount: 84500, age: 32 } };
-    var team = ['Shanice Morgan', 'Andre Campbell'];
-    var actions = [
-      [/\b(call|ring|phone)\b/i, 'Phone call'],
-      [/\b(whatsapp|text|message)\b/i, 'WhatsApp message'],
-      [/\b(email|e-mail|mail)\b/i, 'Email'],
-      [/\b(meet|visit|see)\b/i, 'Meeting'],
-      [/\b(send)\b/i, 'Send something'],
-      [/\b(check|follow up|chase|remind)\b/i, 'Check in']
+    var types = [
+      ['Call', /\b(spoke|spoken|speak|call(?:ed)?|phoned?|rang|ring)\b/i],
+      ['Meeting', /\b(met|meet(?:ing)?|visit(?:ed)?|lunch|sat down)\b/i],
+      ['Email', /\b(e-?mail(?:ed)?|wrote)\b/i]
+    ];
+    var things = 'proposal|quote|contract|invoice|pricing|price list|deck|samples|agreement|brochure';
+    var steps = [
+      [new RegExp('\\bsend\\b(?:\\s+(?:him|her|them|over|across|the|a|an|our|new|revised|updated))*\\s+(' + things + ')\\b', 'i'), function (m) { return 'Send ' + m[1].toLowerCase(); }],
+      [/\b(book|schedule|set up|arrange)\b(?:\s+(?:a|an|the))?\s+(demo|meeting|call|visit|review)\b/i, function (m) { return cap(m[1].toLowerCase()) + ' ' + m[2].toLowerCase(); }],
+      [/\bcall (?:(?:him|her|them) )?back\b/i, function () { return 'Call back'; }],
+      [new RegExp('\\b(review|check|sign)\\b(?:\\s+(?:the|a|an|their|his|her))?\\s+(' + things + ')\\b', 'i'), function (m) { return cap(m[1].toLowerCase()) + ' ' + m[2].toLowerCase(); }],
+      [/\bfollow(?:\s|-)?up\b/i, function () { return 'Follow up'; }]
     ];
     var days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    var TODAY = 3; /* The sample board is set on a Wednesday */
 
-    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+    function parse(text, picked) {
+      var r = {}, lower = text.toLowerCase();
 
-    function parse(text) {
-      var r = {};
-      var a = actions.find(function (p) { return p[0].test(text); });
-      if (a) r.action = { value: a[1], from: 'from “' + text.match(a[0])[0] + '”' };
-
-      var matches = clients.filter(function (c) {
-        return new RegExp('\\b' + c.first + '\\b', 'i').test(text) || new RegExp('\\b' + c.last + '\\b', 'i').test(text);
+      var c = clients.find(function (cl) {
+        return cl.match.some(function (m) { return new RegExp('\\b' + m.replace('.', '\\.') + '\\b', 'i').test(text); });
       });
-      if (matches.length) {
-        var c = matches[0];
-        r.client = { value: c.first + ' ' + c.last + (c.company ? ' · ' + c.company : ''), from: matches.length + ' match of ' + clients.length, c: c };
+      if (c) r.contact = { value: c.name && c.company ? c.name + ' (' + c.company + ')' : (c.name || c.company), c: c };
+
+      /* The first kind of contact mentioned sets the type. Anything else is a note. */
+      var first = null;
+      types.forEach(function (t) {
+        var m = text.match(t[1]);
+        if (m && (!first || m.index < first.at)) first = { value: t[0], at: m.index };
+      });
+      if (text.trim()) r.type = { value: picked || (first ? first.value : 'Note') };
+
+      var about = text.match(/\babout\s+(?:the\s+|a\s+|an\s+|our\s+|their\s+)?([^.,;!?\n]+)/i);
+      if (about) {
+        var topic = about[1].trim().replace(/\s+(?:and|but)\s+.*$/i, '');
+        if (topic.length > 26) topic = topic.slice(0, 26).replace(/\s+\S*$/, '');
+        var verb = { Call: 'Discussed ', Meeting: 'Discussed ', Email: 'Emailed about ', Note: 'Note on ' }[r.type ? r.type.value : 'Note'];
+        r.summary = { value: verb + topic + '…' };
+      } else if (text.trim().length > 12) {
+        var s = text.trim().split(/[.!?\n]/)[0];
+        if (s.length > 30) s = s.slice(0, 30).replace(/\s+\S*$/, '');
+        r.summary = { value: s + '…' };
       }
 
-      var inv = text.match(/\b(?:invoice|inv)\s*#?\s*(\d{3,6})\b/i);
-      if (inv) {
-        var known = invoices[inv[1]];
-        r.invoice = { value: 'Invoice ' + inv[1] + (known ? ' · ' + money(known.amount) + ' · ' + known.age + ' days old' : ''), from: known ? 'found' : 'not in the sample' };
-      }
+      var step = null;
+      steps.some(function (p) { var m = text.match(p[0]); if (m) step = p[1](m); return !!m; });
+      if (step) r.next = { value: step };
 
-      var when = '', whenFrom = '', ahead = null, lower = text.toLowerCase();
-      if (/\btoday\b/.test(lower)) { when = 'Today'; ahead = 0; whenFrom = 'today'; }
-      else if (/\btomorrow\b/.test(lower)) { when = 'Tomorrow'; ahead = 1; whenFrom = 'in 1 day'; }
+      var due = '';
+      if (/\btoday\b/.test(lower)) due = 'Today';
+      else if (/\btomorrow\b/.test(lower)) due = 'Tomorrow';
+      else if (/\bnext week\b/.test(lower)) due = 'Next week';
+      else if (/\b(this week|end of (?:the )?week)\b/.test(lower)) due = 'This week';
+      else if (/\bnext month\b/.test(lower)) due = 'Next month';
+      else if (/\bin (\d{1,2}) days?\b/.test(lower)) { var n = lower.match(/\bin (\d{1,2}) days?\b/)[1]; due = 'In ' + n + (n === '1' ? ' day' : ' days'); }
       else {
         for (var i = 0; i < 7; i++) {
           var d = days[i];
-          if (new RegExp('\\b(' + d + '|' + d.slice(0, 3) + ')\\b').test(lower)) {
-            ahead = (i - TODAY + 7) % 7 || 7;
-            when = cap(d);
-            whenFrom = 'in ' + ahead + (ahead === 1 ? ' day' : ' days');
-            break;
-          }
+          var dm = lower.match(new RegExp('\\b(next )?(' + d + '|' + d.slice(0, 3) + ')\\b'));
+          if (dm) { due = (dm[1] ? 'Next ' : '') + cap(d); break; }
         }
       }
       var t = text.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm)\b/i);
       var noon = /\bnoon\b/i.test(text);
       if (t || noon) {
-        var h = noon ? 12 : parseInt(t[1], 10), m = noon ? '00' : (t[2] || '00'), ap = noon ? 'PM' : t[3].toUpperCase();
-        var time = h + ':' + m + ' ' + ap;
-        when = when ? when + ', ' + time : 'Today, ' + time;
-        if (!whenFrom) whenFrom = 'today';
+        var h = noon ? 12 : parseInt(t[1], 10), mm = noon ? '00' : (t[2] || '00'), ap = noon ? 'PM' : t[3].toUpperCase();
+        due = (due || 'Today') + ', ' + h + ':' + mm + ' ' + ap;
       }
-      if (when) r.when = { value: when, from: whenFrom };
-
-      var who = team.find(function (p) { return new RegExp('\\bfor ' + p.split(' ')[0] + '\\b|\\bto ' + p.split(' ')[0] + '\\b', 'i').test(text); });
-      r.assigned = { value: who || 'You', from: who ? 'from “for ' + who.split(' ')[0] + '”' : 'default' };
+      if (due) r.due = { value: due };
       return r;
     }
 
     function row(label, f, missing) {
       return '<div><dt>' + label + '</dt>' +
-        (f ? '<dd>' + esc(f.value) + '</dd><dd class="from">' + esc(f.from) + '</dd>'
-           : '<dd class="miss">' + missing + '</dd><dd class="from"></dd>') + '</div>';
+        (f ? '<dd>' + esc(f.value) + '</dd>' : '<dd class="miss">' + missing + '</dd>') + '</div>';
     }
 
     function render() {
-      var r = parse(input.value);
+      var r = parse(input.value, picked);
+      var type = r.type ? r.type.value : picked;
+      typeBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-type') === type ? 'true' : 'false'); });
       out.innerHTML =
-        row('Action', r.action, 'Not sure yet. Try “call”, “email” or “WhatsApp”') +
-        row('Client', r.client, 'No match in the sample clients') +
-        row('When', r.when, 'No day or time yet') +
-        row('Linked to', r.invoice, 'Nothing linked') +
-        row('Assigned to', r.assigned);
-      var c = r.client && r.client.c;
-      closes.innerHTML = c && c.late
-        ? '<span class="mono">Also</span><span>Mark “' + esc(c.late) + '” (' + c.days + (c.days === 1 ? ' day' : ' days') + ' late) as done</span>'
+        row('Contact', r.contact, 'Add a name, like Dane or Palm Retail') +
+        row('Type', type ? { value: type } : null, 'Say “spoke with”, “met” or “emailed”') +
+        row('Summary', r.summary, 'Say what it was about') +
+        row('Next step', r.next, 'Add one, like “send a proposal”') +
+        row('Due date', r.due, 'Add a day, like “Friday” or “next week”');
+      var c = r.contact && r.contact.c;
+      closes.innerHTML = c && r.next
+        ? '<span class="mono">Also</span><span>Marks “' + esc(c.task) + '” done and replaces it with “' + esc(r.next.value) + '”</span>'
         : '';
     }
 
-    input.addEventListener('input', render);
+    input.addEventListener('input', function () { picked = null; render(); });
+    typeBtns.forEach(function (b) {
+      b.addEventListener('click', function () { picked = b.getAttribute('data-type'); render(); });
+    });
     log.querySelectorAll('[data-try]').forEach(function (b) {
-      b.addEventListener('click', function () { input.value = b.getAttribute('data-try'); render(); input.focus(); });
+      b.addEventListener('click', function () { input.value = b.getAttribute('data-try'); picked = null; render(); input.focus(); });
     });
     render();
   }
@@ -117,17 +133,21 @@
     var list = trip.querySelector('.trips');
     var why = trip.querySelector('.why');
     var tabs = trip.querySelectorAll('.tabs button');
+    /* UWI, Mona to New Kingston, leaving now: the three options on the Route Options screen */
     var options = {
-      a: { label: 'Best balance', mins: 24, fare: 120, meta: '7:52 → 8:16 AM · Bus in 6 min', segs: [['walk', 3], ['bus', 19, '75 · 19 min'], ['walk', 2]] },
-      b: { label: 'Fastest', mins: 18, fare: 200, meta: 'Leaves when full · Sovereign Centre · ~3 min', segs: [['walk', 1], ['taxi', 17, 'Route taxi · 17 min']] },
-      c: { label: 'Backup route', mins: 31, fare: 240, meta: '7:58 → 8:29 AM · 1 change · Bus in 12 min', segs: [['walk', 1], ['bus', 12, '72'], ['wait', 3], ['bus', 13, '42'], ['walk', 2]] }
+      a: { label: 'JUTC 101', mins: 24, fare: 120, meta: 'UWI → New Kingston · Depart 10:46 AM', segs: [['walk', 2], ['bus', 24, '101 · 24 min']] },
+      b: { label: 'Route Taxi', mins: 28, fare: 150, meta: 'Papine stand → New Kingston · Leaves 10:48 AM', segs: [['walk', 3], ['taxi', 28, 'Route taxi · 28 min']] },
+      c: { label: 'JUTC 98', mins: 32, fare: 120, meta: 'UWI → New Kingston via Cross Roads · Depart 10:52 AM · Running about 5 min late', segs: [['walk', 3], ['bus', 32, '98 · 32 min']] }
     };
     var orders = {
-      recommended: { order: ['a', 'b', 'c'], why: 'Route 75 is the cheapest fare and only 6 minutes slower than the route taxi.' },
-      fastest: { order: ['b', 'a', 'c'], why: 'The route taxi saves 6 minutes but costs J$80 more, and it leaves when it’s full.' },
-      cheapest: { order: ['a', 'b', 'c'], why: 'Route 75 at J$120. The backup route costs double because it needs two buses.' }
+      recommended: { order: ['a', 'b', 'c'], why: 'JUTC 101 is the quickest and the cheapest. Walk 2 minutes, board at 10:48 AM and arrive at 11:12 AM.' },
+      fastest: { order: ['a', 'b', 'c'], why: 'JUTC 101 takes 24 minutes, 4 fewer than the route taxi and 8 fewer than JUTC 98.' },
+      cheapest: { order: ['a', 'c', 'b'], why: 'JUTC 101 and JUTC 98 are both $120. The 101 is 8 minutes quicker, so it comes first. The route taxi is $150.' }
     };
-    var longest = 31;
+    var longest = 0;
+    Object.keys(options).forEach(function (k) {
+      longest = Math.max(longest, options[k].segs.reduce(function (s, g) { return s + g[1]; }, 0));
+    });
 
     Object.keys(options).forEach(function (k) {
       var o = options[k];
@@ -137,8 +157,9 @@
       var bar = o.segs.map(function (s) {
         return '<i class="seg-' + s[0] + '" style="width:' + (s[1] / longest * 100).toFixed(2) + '%">' + (s[2] ? esc(s[2]) : '') + '</i>';
       }).join('');
-      li.innerHTML = '<div class="t">' + o.mins + ' min<small>' + o.label + '</small></div>' +
-        '<div class="route"><div class="bar" role="img" aria-label="' + o.mins + ' minutes door to door">' + bar + '</div><p class="meta">' + esc(o.meta) + '</p></div>' +
+      var walk = o.segs[0][1];
+      li.innerHTML = '<div class="t">' + o.mins + ' min<small>' + esc(o.label) + '</small></div>' +
+        '<div class="route"><div class="bar" role="img" aria-label="Walk ' + walk + ' minutes, then ' + o.mins + ' minutes on the ' + esc(o.label) + '">' + bar + '</div><p class="meta">' + esc(o.meta) + '</p></div>' +
         '<div class="fare">' + money(o.fare) + '</div>';
       list.appendChild(li);
     });
@@ -171,43 +192,56 @@
     var detail = fair.querySelector('.detail');
     var hist = fair.querySelector('.hist');
     var line = hist.querySelector('.median');
-    /* 48 sample 2-bed homes in Kingston 6, in J$10,000 bands from J$60,000 */
-    var bins = [1, 2, 3, 5, 6, 7, 8, 7, 5, 2, 2];
-    var low = 60000, step = 10000, high = low + step * bins.length;
-    var total = bins.reduce(function (a, b) { return a + b; }, 0);
+    /* Sample two-bed rents per area, in $10,000 bands from $100,000 to $240,000.
+       Each area's bands split evenly at its median. */
+    var low = 100000, step = 10000;
+    var areas = {
+      'New Kingston': [1, 1, 2, 3, 4, 6, 7, 7, 5, 4, 3, 2, 2, 1],
+      'Barbican': [1, 2, 3, 5, 6, 6, 5, 3, 2, 1, 0, 0, 0, 0],
+      'Liguanea': [2, 4, 6, 8, 7, 5, 4, 2, 1, 1, 0, 0, 0, 0]
+    };
+    var nb = areas['New Kingston'].length, high = low + step * nb;
     var bars = [];
-    var peak = Math.max.apply(null, bins);
-    bins.forEach(function (n) {
+    for (var b = 0; b < nb; b++) {
       var i = document.createElement('i');
-      i.style.height = (n / peak * 100) + '%';
       hist.insertBefore(i, line);
       bars.push(i);
-    });
+    }
 
     function update() {
       var rent = parseInt(range.value, 10);
       var opt = area.options[area.selectedIndex];
-      var median = parseInt(opt.value, 10), name = opt.textContent;
-      shown.innerHTML = money(rent) + '<small>/ month</small>';
+      var median = parseInt(opt.getAttribute('data-median'), 10), name = opt.value;
+      var bins = areas[name];
+      var total = bins.reduce(function (a, n) { return a + n; }, 0);
+      var peak = Math.max.apply(null, bins);
+      shown.innerHTML = money(rent) + '<small>/mo</small>';
+
       var diff = (rent - median) / median * 100;
       var pct = Math.round(Math.abs(diff));
-      if (pct < 3) verdict.innerHTML = 'About the same as the <em>' + esc(name) + '</em> median of ' + money(median) + '.';
-      else verdict.innerHTML = '<em>' + pct + '% ' + (diff < 0 ? 'below' : 'above') + '</em> the ' + esc(name) + ' median of ' + money(median) + '.';
+      var state = pct < 5 ? 'near' : (diff < 0 ? 'below' : 'above');
+      fair.setAttribute('data-state', state);
+      if (pct === 0) verdict.innerHTML = 'Right on the ' + esc(name) + ' 2‑bed median of ' + money(median) + '.';
+      else verdict.innerHTML = '<em>' + pct + '% ' + (diff < 0 ? 'below' : 'above') + '</em> the ' + esc(name) + ' 2‑bed median of ' + money(median) + '.';
 
       var above = 0;
-      bins.forEach(function (n, i) {
-        var end = low + (i + 1) * step;
+      bins.forEach(function (n, j) {
+        var end = low + (j + 1) * step;
         above += n * Math.min(1, Math.max(0, (end - rent) / step));
       });
-      var inside = rent >= low && rent < high;
-      var cheaper = Math.max(0, Math.round(above) - (inside ? 1 : 0));
-      detail.textContent = 'Cheaper than ' + cheaper + ' of the ' + total + ' two-bed homes listed in Kingston 6.';
+      var cheaper = Math.round(above);
+      detail.textContent = 'Cheaper than ' + cheaper + ' of the ' + total + ' sample two-bed homes in ' + name + '.';
 
       var idx = Math.floor((rent - low) / step);
-      bars.forEach(function (b, i) { b.classList.toggle('on', i === idx); });
+      var medIdx = (median - low) / step;
+      bars.forEach(function (el, j) {
+        el.style.height = (bins[j] / peak * 100) + '%';
+        el.classList.toggle('on', j === idx);
+        el.classList.toggle('lo', j + 1 <= medIdx);
+      });
       var pos = Math.min(100, Math.max(0, (median - low) / (high - low) * 100));
       line.style.left = pos + '%';
-      line.querySelector('span').textContent = 'Median J$' + Math.round(median / 1000) + 'k';
+      line.querySelector('span').textContent = 'Median ' + money(median);
     }
     range.addEventListener('input', update);
     area.addEventListener('change', update);

@@ -16,7 +16,7 @@
   var bug1Home = bug1.parentNode;
   var bug1Next = bug1.nextElementSibling;
   var bug1Tag = bug1.querySelector('.tag');
-  var target = root.querySelector('[data-target="onboarding"]');
+  var target = root.querySelector('[data-target="intro"]');
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var found = {};
   var helped = false;
