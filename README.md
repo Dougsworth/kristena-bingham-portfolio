@@ -19,13 +19,15 @@ assets/
   js/demos.js         Working sketches on the case study pages (one-line log, trip sort, fair-price check)
   js/vendor/          GSAP, ScrollTrigger, SplitText, Lenis (minified)
   images/
-    followup/         log, mobile, reports, today, phone
-    commute/          flow, screen-1 … screen-5, fares, routes
-    rentscope/        compare, explore, listing, report
-    ecommerce/        cover, and the store journey: browse, product, cart, checkout, done (illustrations)
+    followup/         cover, today, log, tasks, contact, mobile, phone
+    commute/          flow, screen-1 … screen-6, plan, routes, details, live, favourites, settings
+    rentscope/        explore, search, listing, compare (panels shown two per board)
+    ecommerce/        cover (Home), browse (listing + product), checkout (cart, checkout, order placed)
 ```
 
 Each case study's images live in its own folder under `assets/images/`. Not on the site yet: `followup/phone.jpg`.
+
+The screens are built from the layered Figma designs (Inter throughout; the IsleMade hero uses Libre Caslon Text). Photos in RentScope and the IsleMade store are from Unsplash.
 
 ## Case study layout
 

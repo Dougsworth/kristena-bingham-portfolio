@@ -372,15 +372,15 @@ blockquote footer { margin-top: 12px; }
 .bar { display: flex; gap: 3px; height: 26px; align-items: center; }
 .bar i { display: flex; align-items: center; height: 100%; border-radius: 2px; font: 600 12px var(--text); font-style: normal; padding-left: 8px; white-space: nowrap; overflow: hidden; }
 .bar .seg-walk { height: 0; border-top: 3px dotted var(--muted); border-radius: 0; }
-.bar .seg-bus { background: #0D674C; color: #FFFFFF; }
-.bar .seg-taxi { background: #F2C230; color: #111111; }
+.bar .seg-bus { background: #1260FB; color: #FFFFFF; }
+.bar .seg-taxi { background: #F8C100; color: #111111; }
 .bar .seg-wait { background: rgba(226, 220, 255, 0.18); }
 .legend { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; color: var(--muted); }
 .legend span { display: inline-flex; gap: 8px; align-items: center; }
 .legend i { display: inline-block; width: 18px; height: 10px; border-radius: 2px; }
 .legend .seg-walk { height: 0; border-top: 3px dotted var(--muted); border-radius: 0; }
-.legend .seg-bus { background: #0D674C; }
-.legend .seg-taxi { background: #F2C230; }
+.legend .seg-bus { background: #1260FB; }
+.legend .seg-taxi { background: #F8C100; }
 .legend .seg-wait { background: rgba(226, 220, 255, 0.18); }
 
 .price-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 40px; align-items: end; }
@@ -394,7 +394,7 @@ blockquote footer { margin-top: 12px; }
 .verdict em { font-style: normal; color: var(--accent); }
 .hist { position: relative; display: flex; align-items: flex-end; gap: 4px; height: 170px; border-bottom: 1px solid var(--muted); }
 .hist i { flex: 1; background: rgba(226, 220, 255, 0.16); border-radius: 2px 2px 0 0; transition: background-color 0.3s; }
-.hist i.on { background: #C0643B; }
+.hist i.on { background: #1E7B4A; }
 .hist .median { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--ink); transition: left 0.4s var(--ease); }
 .hist .median span { position: absolute; top: -2px; left: 8px; white-space: nowrap; font-family: var(--mono); font-size: 12px; color: var(--ink); }
 .hist-axis { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; }

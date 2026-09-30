@@ -3,6 +3,21 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/followup-reports.jpg",
+      "destination": "/assets/images/followup/today.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/commute-fares.jpg",
+      "destination": "/assets/images/commute/flow.jpg",
+      "permanent": true
+    },
+    {
+      "source": "/rentscope-report.jpg",
+      "destination": "/assets/images/rentscope/explore.jpg",
+      "permanent": true
+    },
+    {
       "source": "/commute-s:n(\\d).jpg",
       "destination": "/assets/images/commute/screen-:n.jpg",
       "permanent": true
