@@ -31,7 +31,9 @@ The screens are built from the layered Figma designs (Inter throughout; the Isle
 
 ## Case study layout
 
-Each case study opens with the hero, a status line (what's done, and why there's no live link) and a contents row. The rest is numbered chapters: the problem, who it's for, how it works, a screen-by-screen walkthrough with numbered markers on each screen, a small working sketch, key decisions, visual language, and status with what to test next.
+Each case study opens with the hero, a status line (what's done, and what's next) and a contents row. The rest is numbered chapters.
+
+FollowUp and Kingston Commute follow Kristena's research-led write-ups: background, the problem and a how-might-we question, discovery, key opportunities, the solution, key user flows, the first-round concept screens (walkthrough with numbered markers), testing and iteration, and reflection. Commute also has a Designing for uncertainty chapter (scheduled, estimated, live) and is scoped to JUTC buses only; its concept screens still show route taxis from the broader first round, and the captions say so. RentScope and the e-commerce project keep the older layout: problem, who it's for, how it works, screens, a working sketch, decisions, visual language and outcome.
 
 Walkthrough markers are placed with `--x` and `--y` as percentages of the screen image, so they stay put at any width.
 
