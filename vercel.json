@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/ecommerce",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/followup-reports.jpg",
       "destination": "/assets/images/followup/today.jpg",
       "permanent": true

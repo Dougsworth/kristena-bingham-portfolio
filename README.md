@@ -9,7 +9,6 @@ index.html            Home: intro, selected work, approach, ice breaker, about, 
 followup.html         Case study: FollowUp
 commute.html          Case study: Kingston Commute
 rentscope.html        Case study: RentScope
-ecommerce.html        Case study: E-commerce Platform
 prototypes/followup/  FollowUp as a working web app, at /prototypes/followup (sample data)
 
 assets/
@@ -22,7 +21,6 @@ assets/
     followup/         cover, today, log, tasks, contact, mobile, phone
     commute/          flow, screen-1 … screen-6, plan, routes, details, live, favourites, settings
     rentscope/        explore, search, listing, compare (panels shown two per board)
-    ecommerce/        cover (Home), browse (listing + product), checkout (cart, checkout, order placed)
 ```
 
 Each case study's images live in its own folder under `assets/images/`. Not on the site yet: `followup/phone.jpg`.
@@ -33,7 +31,7 @@ The screens are built from the layered Figma designs (Inter throughout; the Isle
 
 Each case study opens with the hero, a status line (what's done, and what's next) and a contents row. The rest is numbered chapters.
 
-FollowUp and Kingston Commute follow Kristena's research-led write-ups: background, the problem and a how-might-we question, discovery, key opportunities, the solution, key user flows, the first-round concept screens (walkthrough with numbered markers), testing and iteration, and reflection. Commute also has a Designing for uncertainty chapter (scheduled, estimated, live) and is scoped to JUTC buses only; its concept screens still show route taxis from the broader first round, and the captions say so. RentScope and the e-commerce project keep the older layout: problem, who it's for, how it works, screens, a working sketch, decisions, visual language and outcome.
+FollowUp and Kingston Commute follow Kristena's research-led write-ups: background, the problem and a how-might-we question, discovery, key opportunities, the solution, key user flows, the first-round concept screens (walkthrough with numbered markers), testing and iteration, and reflection. Commute also has a Designing for uncertainty chapter (scheduled, estimated, live) and is scoped to JUTC buses only; its concept screens still show route taxis from the broader first round, and the captions say so. RentScope keeps the older layout: problem, who it's for, how it works, screens, a working sketch, decisions, visual language and outcome.
 
 Walkthrough markers are placed with `--x` and `--y` as percentages of the screen image, so they stay put at any width.
 
