@@ -28,3 +28,20 @@
     pick(0);
   });
 })();
+
+/* Figma-style selection frames: hover a screen to see it selected, with its name and size */
+(function () {
+  document.querySelectorAll('.ui-shot .clip, .work-card .frame').forEach(function (box) {
+    var img = box.querySelector('img'); if (!img) return;
+    var fig = box.closest('.ui-shot'), card = box.closest('.work-card');
+    var name = (fig && fig.querySelector('figcaption b')) || (card && card.querySelector('h3'));
+    var label = name ? name.textContent : (img.alt || 'Frame');
+    var sel = document.createElement('span'); sel.className = 'sel'; sel.setAttribute('aria-hidden', 'true');
+    sel.innerHTML = '<i></i><i></i><i></i><i></i><span class="nm"></span><span class="dm"></span>';
+    sel.querySelector('.nm').textContent = label;
+    var dm = sel.querySelector('.dm');
+    function dims() { dm.textContent = Math.round(box.clientWidth) + ' × ' + Math.round(box.clientHeight); }
+    box.addEventListener('pointerenter', dims); dims();
+    box.appendChild(sel);
+  });
+})();
