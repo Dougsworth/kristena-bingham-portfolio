@@ -46,3 +46,16 @@ Walkthrough markers are placed with `--x` and `--y` as percentages of the screen
 Vercel project `kristena-bingham` (Framework preset: Other). Pushing to `main` deploys to production; other branches get a preview link.
 
 `vercel.json` turns on clean URLs, so `followup.html` is served at `/followup`. It also redirects the old image addresses (for example `/followup-today.jpg`) to their new folders, so links shared before the reorganisation keep working.
+
+## ui-portfolio branch
+
+A visual-first version of the site for UI roles, built as a template to show Kristena. Project pages lead with the screens: a hero image, the problem and solution in a line each, large captioned screens, one interaction (a before/after slider or switchable states), and a style tile.
+
+```
+followup.html, commute.html, dutchpot.html   UI project pages
+followup-process.html, commute-process.html  The full UX case studies, linked from each UI page
+assets/css/ui.css, assets/js/ui.js           Work grid, project page layout, slider and state tabs
+assets/images/ui/<project>/                  hero, board-N, style, plus before/after or state images
+```
+
+Dutchpot is a self-initiated concept (not a real brand); its screens are flat illustration with sample prices.
