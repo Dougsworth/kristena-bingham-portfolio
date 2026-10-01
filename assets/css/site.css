@@ -576,3 +576,7 @@ html.reduced .gallery { overflow-x: auto; }
   .hanko.stamp, .board-row.flash, .board-row.nudge { animation: none; }
   .ice-slots p, .ice-foot, .board-row .mark, .board-miss { transition: none; }
 }
+
+/* Screen notes without numbered markers on the image */
+.notes.plain li { grid-template-columns: minmax(0, 1fr); }
+.notes.plain li::before { content: none; }

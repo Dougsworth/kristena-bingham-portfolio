@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/rentscope",
+      "destination": "/",
+      "permanent": false
+    },
+    {
       "source": "/ecommerce",
       "destination": "/",
       "permanent": false
@@ -18,17 +23,12 @@
       "permanent": true
     },
     {
-      "source": "/rentscope-report.jpg",
-      "destination": "/assets/images/rentscope/explore.jpg",
-      "permanent": true
-    },
-    {
       "source": "/commute-s:n(\\d).jpg",
       "destination": "/assets/images/commute/screen-:n.jpg",
       "permanent": true
     },
     {
-      "source": "/:project(commute|followup|rentscope)-:name.jpg",
+      "source": "/:project(commute|followup)-:name.jpg",
       "destination": "/assets/images/:project/:name.jpg",
       "permanent": true
     }
