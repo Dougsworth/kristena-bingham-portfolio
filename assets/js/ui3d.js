@@ -272,6 +272,167 @@ function initHome(hero) {
   requestAnimationFrame(frame);
 }
 
+
+/* ---------------- Home hero, version 2: Showcase ----------------
+   One project at a time on a brand-coloured stage. The device turns away and the next one turns in.
+   A numbered index on the left switches projects; clicking the device opens the project. */
+const SHOW = [
+  { proj: 'followup', type: 'Responsive web app', color: '#6739F5', kind: 'browser', screens: ['dashboard', 'log', 'discussion', 'approval'], w: 4.3, url: 'followup.app/my-tasks' },
+  { proj: 'commute', type: 'Mobile app', color: '#0D6139', kind: 'phone', screens: ['live', 'plan', 'compare', 'delayed'], w: 1.62 },
+  { proj: 'dutchpot', type: 'Concept mobile app', color: '#E2A21C', kind: 'phone', screens: ['recipe', 'home', 'basket', 'tracking'], w: 1.62 },
+  { proj: 'rentscope', type: 'Web app · Data-led UX', color: '#2456D3', kind: 'card', screens: ['search'], w: 3.5 / (1013 / 560), aspect: 1013 / 560 },
+];
+function initShowcase(hero) {
+  hero.classList.add('hero-show');
+  const wrap = document.createElement('div'); wrap.className = 'hero-3d'; wrap.setAttribute('aria-hidden', 'true');
+  const canvas = document.createElement('canvas'); wrap.appendChild(canvas); hero.prepend(wrap);
+  // the index
+  const idx = document.createElement('ol'); idx.className = 'hero-index';
+  idx.innerHTML = SHOW.map((s, i) => `<li><button type="button" data-i="${i}"><span class="n">0${i + 1}</span><span class="t">${NAMES[s.proj]}</span><span class="k">${s.type}</span><i></i></button></li>`).join('');
+  hero.appendChild(idx);
+  const renderer = makeRenderer(canvas, null);
+  const scene = new THREE.Scene(); lights(scene);
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60); camera.position.set(0, 0, 11);
+  const stageG = new THREE.Group(); scene.add(stageG);
+  const panelMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(SHOW[0].color), toneMapped: false });
+  const panel = new THREE.Mesh(rrPlane(5.6, 4.4, 0.08), panelMat); panel.position.z = -0.6; stageG.add(panel);
+  const items = SHOW.map((S) => {
+    const dev = device(S.kind, S.w, S.screens.map((s) => `${IMG}${S.proj}/screens/${s}.jpg`), { url: S.url, aspect: S.aspect });
+    const holder = new THREE.Group(); holder.add(dev.group); stageG.add(holder);
+    const sh = new THREE.Mesh(new THREE.PlaneGeometry(dev.size[0] * 1.5, dev.size[1] * 1.45), new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent: true, depthWrite: false, opacity: 0.5 }));
+    sh.position.set(0.25, -0.3, -0.45); holder.add(sh);
+    if (S.kind === 'phone') { // a second phone behind, for depth
+      const d2 = device('phone', S.w * 0.9, [`${IMG}${S.proj}/screens/${S.screens[1]}.jpg`]);
+      d2.group.position.set(S.w * 0.95, -0.05, -0.35); d2.group.rotation.y = -0.18; holder.add(d2.group);
+      dev.group.position.x = -S.w * 0.45;
+    }
+    holder.visible = false;
+    return { S, dev, holder, w: 0 };
+  });
+  let active = 0, timer = 0;
+  const buttons = [...idx.querySelectorAll('button')];
+  function go(i) { active = (i + items.length) % items.length; timer = 0; buttons.forEach((b, j) => b.classList.toggle('on', j === active)); }
+  buttons.forEach((b, i) => { b.addEventListener('click', () => go(i)); b.addEventListener('pointerenter', () => fine && go(i)); });
+  go(0);
+  function size() {
+    const w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    const vh = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, vw = vh * camera.aspect;
+    if (small()) { const s = Math.min(vw * 0.9 / 5.6, vh * 0.4 / 4.4); stageG.scale.setScalar(s); stageG.position.set(0, vh / 2 - 4.4 * s / 2 - vh * 0.1, 0); }
+    else { const s = Math.min(vw * 0.46 / 5.6, vh * 0.72 / 4.4); stageG.scale.setScalar(s); stageG.position.set(vw / 2 - 5.6 * s / 2 - vw * 0.045, vh / 2 - 4.4 * s / 2 - vh * 0.1, 0); }
+  }
+  size(); window.addEventListener('resize', size);
+  const ray = new THREE.Raycaster(), m = new THREE.Vector2();
+  const cursor = document.querySelector('.cursor'); const label = cursor && cursor.querySelector('span');
+  let over = false;
+  hero.addEventListener('pointermove', (e) => {
+    const r = canvas.getBoundingClientRect();
+    m.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(m, camera);
+    const o = !e.target.closest('a,button') && ray.intersectObject(panel, false).length > 0;
+    if (o !== over) { over = o; hero.classList.toggle('over-screen', o); if (cursor && label) { cursor.classList.toggle('big', o); label.textContent = o ? 'Open' : ''; } }
+  });
+  hero.addEventListener('pointerleave', () => { over = false; hero.classList.remove('over-screen'); cursor && cursor.classList.remove('big'); });
+  hero.addEventListener('click', (e) => { if (!over || e.target.closest('a,button')) return; const l = document.querySelector(`.work-card[href="/${SHOW[active].proj}"]`); if (l) l.click(); });
+  const target = new THREE.Color();
+  let on = true, last = performance.now(), swap = 0;
+  visible(hero, (v) => { on = v; if (v) { last = performance.now(); requestAnimationFrame(frame); } });
+  function frame(now) {
+    if (!on) return;
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    ptr.sx += (ptr.x - ptr.sx) * 0.05; ptr.sy += (ptr.y - ptr.sy) * 0.05;
+    timer += dt; swap += dt;
+    if (timer > 5.5) go(active + 1);
+    if (swap > 1.9) { swap = 0; items[active].dev.next(); }
+    idx.style.setProperty('--p', Math.min(1, timer / 5.5));
+    target.set(SHOW[active].color); panelMat.color.lerp(target, 0.08);
+    const p = clamp(window.scrollY / Math.max(1, hero.offsetHeight), 0, 1);
+    stageG.rotation.y = (fine ? ptr.sx * 0.12 : 0) - 0.08 + p * 0.3;
+    stageG.rotation.x = (fine ? ptr.sy * 0.06 : 0);
+    items.forEach((it, i) => {
+      it.w += ((i === active ? 1 : 0) - it.w) * 0.09;
+      it.holder.visible = it.w > 0.12;
+      const dir = i === active ? 1 : -1;
+      it.holder.rotation.y = (1 - it.w) * 0.9 * dir;
+      it.holder.position.set((1 - it.w) * 1.6 * dir, Math.sin(now / 1100) * 0.05, (1 - it.w) * -1.5);
+      it.holder.scale.setScalar(0.55 + it.w * 0.45);
+      it.dev.tick(dt);
+    });
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------------- Home hero, version 3: Deck ----------------
+   The four project covers fanned like a hand of cards. Hover lifts a card, click opens it. */
+function initDeck(hero) {
+  hero.classList.add('hero-deck');
+  const wrap = document.createElement('div'); wrap.className = 'hero-3d'; wrap.setAttribute('aria-hidden', 'true');
+  const canvas = document.createElement('canvas'); wrap.appendChild(canvas); hero.prepend(wrap);
+  const renderer = makeRenderer(canvas, null);
+  const scene = new THREE.Scene(); lights(scene);
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 60); camera.position.set(0, 0, 11);
+  const deck = new THREE.Group(); scene.add(deck);
+  const P = ['followup', 'commute', 'dutchpot', 'rentscope'];
+  const CW = 3.4, CH = CW / 1.6;
+  const cards = P.map((proj, i) => {
+    const pivot = new THREE.Group(); deck.add(pivot);
+    const g = new THREE.Group(); g.position.y = CH / 2 + 0.6; pivot.add(g);
+    const body = slab(CW, CH, 0.1, 0.04, 0x15121F, 0.6); g.add(body);
+    const face = new THREE.Mesh(rrPlane(CW, CH, 0.1), new THREE.MeshBasicMaterial({ map: tex(`${IMG}${proj}/hero.jpg`), toneMapped: false }));
+    face.position.z = 0.04; g.add(face); face.userData.i = i;
+    const sh = new THREE.Mesh(new THREE.PlaneGeometry(CW * 1.35, CH * 1.45), new THREE.MeshBasicMaterial({ map: shadowTexture(), transparent: true, depthWrite: false, opacity: 0.6 }));
+    sh.position.set(0.15, -0.2, -0.06); g.add(sh);
+    return { proj, pivot, g, face, base: (i - 1.5) * 0.2, hover: 0, deal: 0 };
+  });
+  function size() {
+    const w = hero.clientWidth, h = hero.clientHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    const vh = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, vw = vh * camera.aspect;
+    if (small()) { const s = Math.min(vw * 0.9 / 6.8, vh * 0.42 / 4.6); deck.scale.setScalar(s); deck.position.set(0, vh / 2 - vh * 0.48, 0); }
+    else { const s = Math.min(vw * 0.48 / 5.4, vh * 0.78 / 4.6); deck.scale.setScalar(s); deck.position.set(vw / 2 - 5.4 * s / 2 - vw * 0.04, -vh * 0.18, 0); }
+  }
+  size(); window.addEventListener('resize', size);
+  const ray = new THREE.Raycaster(), m = new THREE.Vector2();
+  const cursor = document.querySelector('.cursor'); const label = cursor && cursor.querySelector('span');
+  let hovered = -1;
+  hero.addEventListener('pointermove', (e) => {
+    const r = canvas.getBoundingClientRect();
+    m.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+    ray.setFromCamera(m, camera);
+    const hit = !e.target.closest('a,button') && ray.intersectObjects(cards.map((c) => c.face), false)[0];
+    const i = hit ? hit.object.userData.i : -1;
+    if (i !== hovered) { hovered = i; hero.classList.toggle('over-screen', i >= 0); if (cursor && label) { cursor.classList.toggle('big', i >= 0); label.textContent = i >= 0 ? NAMES[cards[i].proj] : ''; } }
+  });
+  hero.addEventListener('pointerleave', () => { hovered = -1; hero.classList.remove('over-screen'); cursor && cursor.classList.remove('big'); });
+  hero.addEventListener('click', (e) => { if (hovered < 0 || e.target.closest('a,button')) return; const l = document.querySelector(`.work-card[href="/${cards[hovered].proj}"]`); if (l) l.click(); });
+  let on = true, last = performance.now(), auto = 0, autoT = 0;
+  const t0 = performance.now() + (document.querySelector('.loader') ? 1300 : 150);
+  visible(hero, (v) => { on = v; if (v) { last = performance.now(); requestAnimationFrame(frame); } });
+  function frame(now) {
+    if (!on) return;
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    ptr.sx += (ptr.x - ptr.sx) * 0.05; ptr.sy += (ptr.y - ptr.sy) * 0.05;
+    autoT += dt; if (autoT > 2.8) { autoT = 0; auto = (auto + 1) % cards.length; }
+    const focus = hovered >= 0 ? hovered : (fine ? -1 : auto);
+    const p = clamp(window.scrollY / Math.max(1, hero.offsetHeight), 0, 1);
+    deck.rotation.y = (fine ? ptr.sx * 0.1 : 0) - 0.12;
+    deck.rotation.x = (fine ? ptr.sy * 0.05 : 0);
+    cards.forEach((c, i) => {
+      const a = ease(clamp(((now - t0) / 1000 - i * 0.12) / 1.0, 0, 1));
+      c.hover += ((focus === i ? 1 : 0) - c.hover) * 0.12;
+      const spread = 1 + p * 0.8 + (focus >= 0 ? 0.15 : 0);
+      c.pivot.rotation.z = -(c.base * spread) * a * (1 - c.hover * 0.6);
+      c.pivot.position.set((i - 1.5) * 0.55 * spread * a, -(1 - a) * 4, i * 0.12 + c.hover * 0.8);
+      c.g.position.y = CH / 2 + 0.6 + c.hover * 0.45;
+    });
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
 /* ---------------- Project covers ---------------- */
 const STAGES = {
   followup: { bg: '#6739F5', items: [
@@ -338,7 +499,10 @@ function initStage(cover, slug) {
 
 if (!reduce && hasGL()) {
   const hero = document.querySelector('.hero[data-3d-home]');
-  if (hero) initHome(hero);
+  if (hero) {
+    const v = new URLSearchParams(location.search).get('hero') || 'showcase';
+    if (v === 'canvas') initHome(hero); else if (v === 'deck') initDeck(hero); else initShowcase(hero);
+  }
   const cover = document.querySelector('.cover[data-3d]');
   if (cover) initStage(cover, cover.getAttribute('data-3d'));
 }
