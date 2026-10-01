@@ -1,5 +1,5 @@
 /* UI portfolio: Three.js scenes built from Kristena's real screens.
-   - Home hero: a field of floating devices you can hover and click through to each project.
+   - Home hero: the projects laid out as labelled sections on a design canvas; hover to select a frame, click to open it.
    - Project covers: the project's devices in 3D, tilting with the pointer, turning with scroll, and cycling screens.
    Falls back to the static images with reduced motion or no WebGL. */
 import * as THREE from '/assets/js/vendor/three.module.min.js';
@@ -65,6 +65,11 @@ function device(kind, width, srcs, opts = {}) {
     const body = slab(sw + 2 * b, sh + 2 * b, r + b, d, 0x121218, 0.35); group.add(body);
     screenZ = d / 2 + d * 0.35 + 0.004;
     var screenGeo = rrPlane(sw, sh, r * 0.9);
+  } else if (kind === 'card') {
+    sw = width; sh = width * (opts.aspect || 2); const r = width * 0.07, d = width * 0.03;
+    const body = slab(sw, sh, r, d, 0xFFFFFF, 0.7); group.add(body);
+    screenZ = d / 2 + d * 0.35 + 0.004;
+    var screenGeo = rrPlane(sw * 0.985, sh * 0.99, r * 0.9);
   } else {
     sw = width; sh = width * 910 / 1280; const bar = width * 0.035, d = width * 0.02, r = width * 0.018;
     const body = slab(sw, sh + bar, r, d, 0xF4F2F8, 0.6); body.position.y = bar / 2; group.add(body);
@@ -118,50 +123,104 @@ function visible(el, cb) {
   io.observe(el);
 }
 
-/* ---------------- Home hero ---------------- */
-const NAMES = { followup: 'FollowUp', commute: 'Kingston Commute', dutchpot: 'Dutchpot' };
-const HOME = [
-  ['followup', 'browser', ['dashboard'], 3.4, 1.75, -1.2, 3.0, -0.22, 'followup.app/my-tasks'],
-  ['commute', 'phone', ['live', 'delayed'], 4.35, 0.25, 0.4, 1.1, -0.32],
-  ['dutchpot', 'phone', ['recipe', 'basket'], 2.55, -0.25, 1.3, 1.05, -0.14],
-  ['followup', 'browser', ['timeline'], 5.6, 2.25, -3.0, 3.0, -0.36, 'followup.app/clients/dane-mitchell'],
-  ['dutchpot', 'phone', ['home'], 6.3, -0.9, -2.0, 1.05, -0.36],
-  ['commute', 'phone', ['plan'], -1.0, 2.3, -3.5, 1.1, 0.26],
-  ['dutchpot', 'phone', ['tracking'], 7.8, 1.2, -4.8, 1.05, -0.5],
-  ['commute', 'phone', ['compare'], -3.7, 2.7, -6.0, 1.1, 0.36],
-  ['followup', 'browser', ['companies'], 1.0, 3.9, -7.0, 3.2, 0.1, 'followup.app/companies'],
-  ['commute', 'phone', ['journey'], 9.0, -1.0, -7.5, 1.15, -0.5],
+/* ---------------- Home hero: a tidy design canvas ----------------
+   Four labelled sections in a 2 x 2 grid, one per project, like sections on a Figma canvas.
+   Hover a frame to select it, click to open the project. */
+const NAMES = { followup: 'FollowUp', commute: 'Kingston Commute', dutchpot: 'Dutchpot', rentscope: 'RentScope' };
+const COLORS = { followup: '#7C5CFF', commute: '#1E7B4A', dutchpot: '#F4B526', rentscope: '#2456D3' };
+const PH = 1.62;                       // frame height for phones and cards
+const PW = PH * 390 / 844;             // phone width
+const RS = { search: 1013 / 560, list: 1174 / 560, listing: 1189 / 560 };
+const SECTIONS = [
+  { proj: 'followup', col: 0, row: 0, frames: [['browser', ['dashboard', 'log', 'discussion'], 2.5, null, 'followup.app/my-tasks']] },
+  { proj: 'commute', col: 1, row: 0, frames: [['phone', ['plan'], PW], ['phone', ['live', 'delayed', 'unavailable'], PW], ['phone', ['compare'], PW]] },
+  { proj: 'dutchpot', col: 0, row: 1, frames: [['phone', ['home'], PW], ['phone', ['recipe', 'basket', 'delivery'], PW], ['phone', ['tracking'], PW]] },
+  { proj: 'rentscope', col: 1, row: 1, frames: [['card', ['list'], PH / RS.list, RS.list], ['card', ['search'], PH / RS.search, RS.search], ['card', ['listing'], PH / RS.listing, RS.listing]] },
 ];
+const CELL_W = 2.9, CELL_H = 2.35, GAP_X = 0.5, GAP_Y = 0.25, FGAP = 0.14;
+
+function labelTexture(text, color) {
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 96;
+  const x = c.getContext('2d');
+  x.fillStyle = color; x.fillRect(4, 30, 30, 30);
+  x.fillStyle = 'rgba(238,236,230,0.82)'; x.font = '500 46px "IBM Plex Mono", ui-monospace, monospace'; x.textBaseline = 'middle';
+  x.fillText(text.toUpperCase(), 56, 49);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t;
+}
+function dotTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const x = c.getContext('2d'); x.fillStyle = 'rgba(238,236,230,0.16)'; x.beginPath(); x.arc(32, 32, 2.2, 0, Math.PI * 2); x.fill();
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+}
+function fadeMask() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const x = c.getContext('2d'); const g = x.createRadialGradient(128, 128, 40, 128, 128, 128);
+  g.addColorStop(0, '#fff'); g.addColorStop(1, '#000'); x.fillStyle = g; x.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(c);
+}
+function outline(w, h) {
+  const p = 0.05, g = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-w / 2 - p, -h / 2 - p, 0), new THREE.Vector3(w / 2 + p, -h / 2 - p, 0),
+    new THREE.Vector3(w / 2 + p, h / 2 + p, 0), new THREE.Vector3(-w / 2 - p, h / 2 + p, 0)]);
+  const l = new THREE.LineLoop(g, new THREE.LineBasicMaterial({ color: 0x0D99FF, transparent: true, opacity: 0 }));
+  return l;
+}
+
 function initHome(hero) {
-  const bg = new THREE.Color('#0D0B14');
   const wrap = document.createElement('div'); wrap.className = 'hero-3d'; wrap.setAttribute('aria-hidden', 'true');
   const canvas = document.createElement('canvas'); wrap.appendChild(canvas); hero.prepend(wrap);
   const renderer = makeRenderer(canvas, null);
-  const scene = new THREE.Scene(); scene.fog = new THREE.Fog(bg, 9, 21); lights(scene);
+  const scene = new THREE.Scene(); lights(scene);
   const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 60); camera.position.set(0, 0, 10);
-  const world = new THREE.Group(); scene.add(world);
-  const items = [];
-  const list = small() ? HOME.slice(0, 7) : HOME;
-  list.forEach((d, i) => {
-    const [proj, kind, screens, x, y, z, w, ry, url] = d;
-    const dev = device(kind, w, screens.map((s) => `${IMG}${proj}/screens/${s}.jpg`), { url });
-    const holder = new THREE.Group(); holder.add(dev.group); world.add(holder);
-    dev.group.rotation.y = ry; dev.group.rotation.x = 0.04;
-    dev.screen.userData.i = i; dev.top.userData.i = i;
-    items.push({ dev, holder, proj, home: new THREE.Vector3(x, y, z), delay: 0.12 * i, seed: Math.random() * 10, hover: 0, ry });
-  });
-  const hits = items.flatMap((it) => [it.dev.screen, it.dev.top]);
+  const board = new THREE.Group(); scene.add(board);
 
+  // dotted canvas behind the sections
+  const dots = dotTexture(); dots.repeat.set(26, 22);
+  const grid = new THREE.Mesh(new THREE.PlaneGeometry(2 * CELL_W + GAP_X + 2.4, 2 * CELL_H + GAP_Y + 2.2),
+    new THREE.MeshBasicMaterial({ map: dots, alphaMap: fadeMask(), transparent: true, depthWrite: false }));
+  grid.position.z = -0.25; board.add(grid);
+
+  const frames = [];
+  SECTIONS.forEach((S, si) => {
+    const cx = (S.col - 0.5) * (CELL_W + GAP_X), cy = (0.5 - S.row) * (CELL_H + GAP_Y);
+    const sec = new THREE.Group(); sec.position.set(cx, cy, 0); board.add(sec);
+    const lab = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 0.225), new THREE.MeshBasicMaterial({ map: labelTexture(NAMES[S.proj], COLORS[S.proj]), transparent: true, depthWrite: false }));
+    lab.position.set(-CELL_W / 2 + 1.2, CELL_H / 2 - 0.08, 0.01); sec.add(lab);
+    const devs = S.frames.map(([kind, screens, w, aspect, url]) => device(kind, w, screens.map((s) => `${IMG}${S.proj}/screens/${s}.jpg`), { aspect, url }));
+    const total = devs.reduce((a, d) => a + d.size[0], 0) + FGAP * (devs.length - 1);
+    let x = -total / 2;
+    devs.forEach((dev, fi) => {
+      const holder = new THREE.Group();
+      const fh = dev.size[1] + (S.frames[fi][0] === 'browser' ? dev.size[0] * 0.035 : 0);
+      holder.position.set(x + dev.size[0] / 2, -0.13, 0); x += dev.size[0] + FGAP;
+      holder.add(dev.group);
+      const ol = outline(dev.size[0], fh); ol.position.set(0, S.frames[fi][0] === 'browser' ? dev.size[0] * 0.0175 : 0, 0.08); holder.add(ol);
+      sec.add(holder);
+      const i = frames.length;
+      dev.screen.userData.i = i; dev.top.userData.i = i;
+      frames.push({ dev, holder, ol, proj: S.proj, si, hover: 0, cycles: S.frames[fi][1].length > 1 });
+    });
+  });
+  const hits = frames.flatMap((f) => [f.dev.screen, f.dev.top]);
+
+  let baseScale = 1;
   function size() {
     const w = hero.clientWidth, h = hero.clientHeight;
-    renderer.setSize(w, h, false); camera.aspect = w / h;
-    if (small()) { world.scale.setScalar(0.42); world.position.set(-1.35, 1.75, 0); }
-    else { world.scale.setScalar(Math.min(1, camera.aspect / 1.6)); world.position.set(0, 0, 0); }
-    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+    const vh = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z, vw = vh * camera.aspect;
+    const bw = 2 * CELL_W + GAP_X, bh = 2 * CELL_H + GAP_Y;
+    if (small()) {
+      baseScale = Math.min((vw * 0.94) / bw, (vh * 0.42) / bh);
+      board.position.set(0, vh / 2 - (bh * baseScale) / 2 - vh * 0.1, 0);
+    } else {
+      // right-hand 47% of the hero, above the intro row
+      baseScale = Math.min((vw * 0.5) / bw, (vh * 0.68) / bh);
+      board.position.set(vw / 2 - (bw * baseScale) / 2 - vw * 0.04, vh / 2 - (bh * baseScale) / 2 - vh * 0.1, 0);
+    }
+    board.scale.setScalar(baseScale);
   }
   size(); window.addEventListener('resize', size);
 
-  // hover + click through to the project
   const ray = new THREE.Raycaster(), m = new THREE.Vector2();
   const cursor = document.querySelector('.cursor'); const label = cursor && cursor.querySelector('span');
   let hovered = -1;
@@ -172,48 +231,44 @@ function initHome(hero) {
     const hit = ray.intersectObjects(hits, false)[0];
     const i = hit && !e.target.closest('a,button') ? hit.object.userData.i : -1;
     if (i !== hovered) {
-      hovered = i;
-      hero.classList.toggle('over-screen', i >= 0);
-      if (cursor && label) {
-        if (i >= 0) { cursor.classList.add('big'); label.textContent = NAMES[items[i].proj]; }
-        else { cursor.classList.remove('big'); label.textContent = ''; }
-      }
+      hovered = i; hero.classList.toggle('over-screen', i >= 0);
+      if (cursor && label) { if (i >= 0) { cursor.classList.add('big'); label.textContent = NAMES[frames[i].proj]; } else { cursor.classList.remove('big'); label.textContent = ''; } }
     }
   });
   hero.addEventListener('pointerleave', () => { hovered = -1; hero.classList.remove('over-screen'); if (cursor) cursor.classList.remove('big'); });
   hero.addEventListener('click', (e) => {
     if (hovered < 0 || e.target.closest('a,button')) return;
-    const link = document.querySelector(`.work-card[href="/${items[hovered].proj}"]`);
+    const link = document.querySelector(`.work-card[href="/${frames[hovered].proj}"]`);
     if (link) link.click();
   });
 
-  let on = true, t0 = performance.now() + (document.querySelector('.loader') && !document.documentElement.classList.contains('reduced') ? 1500 : 200), last = performance.now(), cycle = 0;
+  let on = true, last = performance.now(), cycle = 0, turn = 0;
+  const t0 = performance.now() + (document.querySelector('.loader') ? 1300 : 150);
   visible(hero, (v) => { on = v; if (v) { last = performance.now(); requestAnimationFrame(frame); } });
   function frame(now) {
     if (!on) return;
     const dt = Math.min(0.05, (now - last) / 1000); last = now;
     ptr.sx += (ptr.x - ptr.sx) * 0.05; ptr.sy += (ptr.y - ptr.sy) * 0.05;
     const p = clamp(window.scrollY / Math.max(1, hero.offsetHeight), 0, 1);
-    camera.position.z = 10 - ease(p) * 7;
-    camera.position.x = ptr.sx * 0.5 + p * 1.5; camera.position.y = -ptr.sy * 0.35;
-    camera.lookAt(p * 2.2, 0, -2);
-    world.rotation.y = ptr.sx * 0.12 + p * 0.35;
+    const tilt = small() ? 0 : 1;
+    board.rotation.y = (-0.26 + ptr.sx * 0.07) * tilt * (1 - p * 0.7);
+    board.rotation.x = (0.06 + ptr.sy * 0.05) * tilt;
+    camera.position.z = 10 - ease(p) * 3.5;
+    // one section's frames change screens at a time, in order
     cycle += dt;
-    const swap = cycle > 3.2; if (swap) cycle = 0;
-    items.forEach((it, i) => {
-      const a = ease(clamp(((now - t0) / 1000 - it.delay) / 1.6, 0, 1));
-      const t = now / 1000 + it.seed;
-      it.holder.position.set(it.home.x, it.home.y + Math.sin(t * 0.6) * 0.08, it.home.z - (1 - a) * 18);
-      it.hover += ((hovered === i ? 1 : 0) - it.hover) * 0.12;
-      it.holder.scale.setScalar(1 + it.hover * 0.06);
-      it.dev.group.rotation.y = it.ry * (1 - it.hover) + Math.sin(t * 0.4) * 0.05;
-      it.dev.group.rotation.x = 0.04 + Math.cos(t * 0.5) * 0.03;
-      if (swap && i < 3) it.dev.next();
-      it.dev.tick(dt);
+    if (cycle > 2.6) { cycle = 0; const pick = frames.filter((f) => f.cycles); if (pick.length) pick[turn++ % pick.length].dev.next(); }
+    frames.forEach((f, i) => {
+      const a = ease(clamp(((now - t0) / 1000 - f.si * 0.14 - (i % 3) * 0.05) / 1.1, 0, 1));
+      f.hover += ((hovered === i ? 1 : 0) - f.hover) * 0.15;
+      f.holder.position.z = -(1 - a) * 2.5 + f.hover * 0.22;
+      f.holder.scale.setScalar((0.94 + a * 0.06) * (1 + f.hover * 0.03));
+      f.ol.material.opacity = f.hover;
+      f.dev.tick(dt);
     });
     renderer.render(scene, camera);
     requestAnimationFrame(frame);
   }
+  if (document.fonts && document.fonts.load) document.fonts.load('500 46px "IBM Plex Mono"').catch(() => {});
   requestAnimationFrame(frame);
 }
 

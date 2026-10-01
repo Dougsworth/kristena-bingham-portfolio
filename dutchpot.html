@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css?v=452b62cb">
-<link rel="stylesheet" href="/assets/css/ui.css?v=3">
+<link rel="stylesheet" href="/assets/css/ui.css?v=4">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__kbReady)document.documentElement.classList.remove('js')},3500);</script>
 </head>
 <body>
@@ -39,6 +39,7 @@
   <h1 data-lines>Dutchpot</h1>
   <p class="lede reveal-up">Pick tonight’s recipe and get every ingredient delivered, with the full price before you start.</p>
   <dl class="facts reveal-up"><div><dt>Role</dt><dd>UI Designer</dd></div><div><dt>Platform</dt><dd>Mobile app</dd></div><div><dt>Tools</dt><dd>Figma</dd></div><div><dt>Type</dt><dd>Visual concept</dd></div></dl>
+  <nav class="ui-toc reveal-up" aria-label="On this page"><a href="#screens"><span>01</span>Screens</a><a href="#interaction"><span>02</span>Recipe to doorstep</a><a href="#style"><span>03</span>Style tile</a></nav>
   <div class="cover clip" data-3d="dutchpot"><img src="/assets/images/ui/dutchpot/hero.jpg" alt="Three Dutchpot screens on ackee yellow, with a dutch pot and scotch bonnet illustration" width="2000" height="1250"></div>
 </section>
 <section class="ui-brief wrap">
@@ -47,21 +48,20 @@
 </section>
 <section class="ui-sec wrap" id="screens">
   <header class="ui-head"><div><span class="mono">01</span><h2 data-lines-scroll>Screens</h2></div><p class="reveal-up">Six screens, from choosing a recipe to the delivery at the door.</p></header>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/dutchpot/board-1.jpg" alt="Home screen and the Ackee and saltfish recipe" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Home and recipe</b><span>Tonight’s recipe with its total price, then the ingredients in the right quantities for four.</span></figcaption></figure>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/dutchpot/board-2.jpg" alt="Pantry aisle grid and the basket" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Aisles and basket</b><span>Flat illustrated packaging keeps the grid calm. The basket groups items by the recipe they came from.</span></figcaption></figure>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/dutchpot/board-3.jpg" alt="Delivery time slots and order tracking" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Delivery and tracking</b><span>Slots show the fee and what’s left. If an item was swapped, the app says what, why and what it cost.</span></figcaption></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">01 / 03</span><b>Home and recipe</b><span>Tonight’s recipe with its total price, then the ingredients in the right quantities for four.</span></figcaption><div class="clip"><img src="/assets/images/ui/dutchpot/board-1.jpg" alt="Home screen and the Ackee and saltfish recipe" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">02 / 03</span><b>Aisles and basket</b><span>Flat illustrated packaging keeps the grid calm. The basket groups items by the recipe they came from.</span></figcaption><div class="clip"><img src="/assets/images/ui/dutchpot/board-2.jpg" alt="Pantry aisle grid and the basket" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">03 / 03</span><b>Delivery and tracking</b><span>Slots show the fee and what’s left. If an item was swapped, the app says what, why and what it cost.</span></figcaption><div class="clip"><img src="/assets/images/ui/dutchpot/board-3.jpg" alt="Delivery time slots and order tracking" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
 </section>
 <section class="ui-sec wrap" id="interaction">
   <header class="ui-head"><div><span class="mono">02</span><h2 data-lines-scroll>Recipe to doorstep</h2></div><p class="reveal-up">Four screens, one flow. Step through it.</p></header>
-  <div class="reveal-up phones-stage" data-states>
-    <div class="ui-tabs" role="tablist" aria-label="Recipe to doorstep"><button type="button" role="tab" data-note="Choose servings and untick anything already in the cupboard. The button shows the price before anything is added.">Recipe</button><button type="button" role="tab" data-note="Items stay grouped under the recipe. Substitutes are on, and the app explains what that means.">Basket</button><button type="button" role="tab" data-note="Each slot shows its fee. Full slots stay visible but greyed out, so nobody wonders where 3 pm went.">Delivery</button><button type="button" role="tab" data-note="One arrival window, four steps, and a plain note about the swap with the refund amount.">Tracking</button></div>
+  <div class="reveal-up phones-stage ui-play" data-states>
+    <div><div class="ui-tabs" role="tablist" aria-label="Recipe to doorstep"><button type="button" role="tab" data-note="Choose servings and untick anything already in the cupboard. The button shows the price before anything is added."><span>01</span>Recipe</button><button type="button" role="tab" data-note="Items stay grouped under the recipe. Substitutes are on, and the app explains what that means."><span>02</span>Basket</button><button type="button" role="tab" data-note="Each slot shows its fee. Full slots stay visible but greyed out, so nobody wonders where 3 pm went."><span>03</span>Delivery</button><button type="button" role="tab" data-note="One arrival window, four steps, and a plain note about the swap with the refund amount."><span>04</span>Tracking</button></div><p class="ui-state-note" aria-live="polite"></p></div>
     <div class="ui-stage"><img src="/assets/images/ui/dutchpot/step-recipe.jpg" alt="Recipe screen" width="2000" height="1250" loading="lazy"><img src="/assets/images/ui/dutchpot/step-basket.jpg" alt="Basket screen" width="2000" height="1250" loading="lazy"><img src="/assets/images/ui/dutchpot/step-delivery.jpg" alt="Delivery time screen" width="2000" height="1250" loading="lazy"><img src="/assets/images/ui/dutchpot/step-tracking.jpg" alt="Order tracking screen" width="2000" height="1250" loading="lazy"></div>
-    <p class="ui-state-note" aria-live="polite"></p>
   </div>
 </section>
 <section class="ui-sec wrap" id="style">
   <header class="ui-head"><div><span class="mono">03</span><h2 data-lines-scroll>Style tile</h2></div><p class="reveal-up">Warm Jamaican kitchen colours: pepper red for actions, ackee yellow for recipes, set in Fraunces and DM Sans.</p></header>
-  <figure class="ui-shot"><div class="clip"><img src="/assets/images/ui/dutchpot/style.jpg" alt="Dutchpot style tile: colours, Fraunces and DM Sans, buttons, chips and illustrated packaging" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot solo"><div class="clip"><img src="/assets/images/ui/dutchpot/style.jpg" alt="Dutchpot style tile: colours, Fraunces and DM Sans, buttons, chips and illustrated packaging" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
   <p class="mono ui-note reveal-up">A self-initiated visual concept. Dutchpot is not a real brand, and prices are sample data.</p>
 </section>
 <a class="next-project wrap" href="/rentscope" data-transition data-color="#0D6139" data-cursor="Next" style="--next: #0D6139">
@@ -81,6 +81,6 @@
 <script src="/assets/js/vendor/lenis.min.js" defer></script>
 <script src="/assets/js/site.js?v=3f7ff32a" defer></script>
 <script src="/assets/js/ui.js?v=2" defer></script>
-<script type="module" src="/assets/js/ui3d.js?v=1"></script>
+<script type="module" src="/assets/js/ui3d.js?v=2"></script>
 </body>
 </html>

@@ -19,7 +19,7 @@
     tabs.forEach(function (t, i) {
       t.addEventListener('click', function () { pick(i); });
       t.addEventListener('keydown', function (e) {
-        var k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        var k = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
         if (!k) return;
         e.preventDefault();
         var n = (i + k + tabs.length) % tabs.length; pick(n); tabs[n].focus();

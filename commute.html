@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/assets/css/site.css?v=452b62cb">
-<link rel="stylesheet" href="/assets/css/ui.css?v=3">
+<link rel="stylesheet" href="/assets/css/ui.css?v=4">
 <script>document.documentElement.classList.add('js');setTimeout(function(){if(!window.__kbReady)document.documentElement.classList.remove('js')},3500);</script>
 </head>
 <body>
@@ -39,6 +39,7 @@
   <h1 data-lines>Kingston Commute</h1>
   <p class="lede reveal-up">Plan a JUTC bus journey, compare routes by time or fare, and know how far to trust every arrival time.</p>
   <dl class="facts reveal-up"><div><dt>Role</dt><dd>UX/UI Designer</dd></div><div><dt>Platform</dt><dd>iOS and Android</dd></div><div><dt>Tools</dt><dd>Figma, FigJam</dd></div><div><dt>Screens</dt><dd>11 high-fidelity</dd></div></dl>
+  <nav class="ui-toc reveal-up" aria-label="On this page"><a href="#screens"><span>01</span>Screens</a><a href="#interaction"><span>02</span>Three levels of trust</a><a href="#style"><span>03</span>Style tile</a><a href="/commute-process"><span>→</span>Full UX case study</a></nav>
   <div class="cover clip" data-3d="commute"><img src="/assets/images/ui/commute/hero.jpg" alt="Three Kingston Commute screens on green: journey options, live tracking and journey planning" width="2000" height="1250"></div>
 </section>
 <section class="ui-brief wrap">
@@ -47,22 +48,21 @@
 </section>
 <section class="ui-sec wrap" id="screens">
   <header class="ui-head"><div><span class="mono">01</span><h2 data-lines-scroll>Screens</h2></div><p class="reveal-up">Real JUTC routes and fares, including the 72, the 75 Express and the 800.</p></header>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/commute/board-1.jpg" alt="Plan a journey and compare journey options" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Plan and compare</b><span>Where you’re going, then options by time or price, with SmartFare and cash fares side by side.</span></figcaption></figure>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/commute/board-2.jpg" alt="Boarding, stops and transfer, and the route schedule" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Every step of the trip</b><span>Where to board, where to change, and every stop on the 72 to Half Way Tree.</span></figcaption></figure>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/commute/board-3.jpg" alt="Live bus tracking and the how to read these times sheet" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>Live tracking, explained</b><span>The bus on the map, and a plain guide to what Live, Estimated and Scheduled mean.</span></figcaption></figure>
-  <figure class="ui-shot phones"><div class="clip"><img src="/assets/images/ui/commute/board-4.jpg" alt="Tracking delayed and tracking unavailable states" width="2000" height="1250" loading="lazy" decoding="async"></div><figcaption class="reveal-up"><b>When live data fails</b><span>A delayed update widens the estimate. No signal falls back to the timetable, and says so.</span></figcaption></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">01 / 04</span><b>Plan and compare</b><span>Where you’re going, then options by time or price, with SmartFare and cash fares side by side.</span></figcaption><div class="clip"><img src="/assets/images/ui/commute/board-1.jpg" alt="Plan a journey and compare journey options" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">02 / 04</span><b>Every step of the trip</b><span>Where to board, where to change, and every stop on the 72 to Half Way Tree.</span></figcaption><div class="clip"><img src="/assets/images/ui/commute/board-2.jpg" alt="Boarding, stops and transfer, and the route schedule" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">03 / 04</span><b>Live tracking, explained</b><span>The bus on the map, and a plain guide to what Live, Estimated and Scheduled mean.</span></figcaption><div class="clip"><img src="/assets/images/ui/commute/board-3.jpg" alt="Live bus tracking and the how to read these times sheet" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot phones"><figcaption class="reveal-up"><span class="num">04 / 04</span><b>When live data fails</b><span>A delayed update widens the estimate. No signal falls back to the timetable, and says so.</span></figcaption><div class="clip"><img src="/assets/images/ui/commute/board-4.jpg" alt="Tracking delayed and tracking unavailable states" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
 </section>
 <section class="ui-sec wrap" id="interaction">
   <header class="ui-head"><div><span class="mono">02</span><h2 data-lines-scroll>Three levels of trust</h2></div><p class="reveal-up">The same screen as the data gets less certain. Switch between them.</p></header>
-  <div class="reveal-up phones-stage" data-states>
-    <div class="ui-tabs" role="tablist" aria-label="Three levels of trust"><button type="button" role="tab" data-note="Live: the bus is sending its position, so the arrival time is exact to the minute.">Live</button><button type="button" role="tab" data-note="Delayed: the last update is a few minutes old, so the arrival becomes a range and the map marks where the bus was last seen.">Delayed</button><button type="button" role="tab" data-note="Unavailable: no signal from the bus, so the app falls back to the timetable and labels every time Scheduled.">Unavailable</button></div>
+  <div class="reveal-up phones-stage ui-play" data-states>
+    <div><div class="ui-tabs" role="tablist" aria-label="Three levels of trust"><button type="button" role="tab" data-note="Live: the bus is sending its position, so the arrival time is exact to the minute."><span>01</span>Live</button><button type="button" role="tab" data-note="Delayed: the last update is a few minutes old, so the arrival becomes a range and the map marks where the bus was last seen."><span>02</span>Delayed</button><button type="button" role="tab" data-note="Unavailable: no signal from the bus, so the app falls back to the timetable and labels every time Scheduled."><span>03</span>Unavailable</button></div><p class="ui-state-note" aria-live="polite"></p></div>
     <div class="ui-stage"><img src="/assets/images/ui/commute/state-live.jpg" alt="Live tracking" width="2000" height="1250" loading="lazy"><img src="/assets/images/ui/commute/state-delayed.jpg" alt="Tracking delayed" width="2000" height="1250" loading="lazy"><img src="/assets/images/ui/commute/state-unavailable.jpg" alt="Tracking unavailable" width="2000" height="1250" loading="lazy"></div>
-    <p class="ui-state-note" aria-live="polite"></p>
   </div>
 </section>
 <section class="ui-sec wrap" id="style">
   <header class="ui-head"><div><span class="mono">03</span><h2 data-lines-scroll>Style tile</h2></div><p class="reveal-up">Route green and JUTC gold, with reliability shown by the shape of a small icon, not by colour alone.</p></header>
-  <figure class="ui-shot"><div class="clip"><img src="/assets/images/ui/commute/style.jpg" alt="Kingston Commute style tile: colours, Inter type, route badges and reliability labels" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
+  <figure class="ui-shot solo"><div class="clip"><img src="/assets/images/ui/commute/style.jpg" alt="Kingston Commute style tile: colours, Inter type, route badges and reliability labels" width="2000" height="1250" loading="lazy" decoding="async"></div></figure>
 </section>
 <nav class="ui-links wrap reveal-up" aria-label="More on this project"><a href="/commute-process">Full UX case study →</a></nav>
 <a class="next-project wrap" href="/dutchpot" data-transition data-color="#C2361C" data-cursor="Next" style="--next: #C2361C">
@@ -82,6 +82,6 @@
 <script src="/assets/js/vendor/lenis.min.js" defer></script>
 <script src="/assets/js/site.js?v=3f7ff32a" defer></script>
 <script src="/assets/js/ui.js?v=2" defer></script>
-<script type="module" src="/assets/js/ui3d.js?v=1"></script>
+<script type="module" src="/assets/js/ui3d.js?v=2"></script>
 </body>
 </html>
