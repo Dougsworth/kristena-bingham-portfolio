@@ -588,3 +588,6 @@ html.reduced .gallery { overflow-x: auto; }
 .proto.phone { width: min(100%, 460px); aspect-ratio: 460 / 940; margin-inline: auto; }
 .proto-note { max-width: 62ch; }
 .proto.phone + .proto-note { margin-inline: auto; text-align: center; }
+
+/* Prototype link under the case-study facts */
+.try-proto { padding-block: 18px; border-bottom: 1px solid var(--rule); font-size: 17px; }
