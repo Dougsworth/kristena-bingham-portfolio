@@ -580,3 +580,11 @@ html.reduced .gallery { overflow-x: auto; }
 /* Screen notes without numbered markers on the image */
 .notes.plain li { grid-template-columns: minmax(0, 1fr); }
 .notes.plain li::before { content: none; }
+
+/* Figma prototype embeds */
+.proto { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; background: var(--bg-2); }
+.proto iframe { display: block; width: 100%; height: 100%; border: 0; }
+.proto.desktop { aspect-ratio: 16 / 10; min-height: 460px; }
+.proto.phone { width: min(100%, 460px); aspect-ratio: 460 / 940; margin-inline: auto; }
+.proto-note { max-width: 62ch; }
+.proto.phone + .proto-note { margin-inline: auto; text-align: center; }
