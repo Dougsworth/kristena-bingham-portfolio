@@ -680,3 +680,39 @@ body{font-weight:400;line-height:1.5}
   .cs-hero h1{font-size:24px;line-height:28.8px}
 }
 @media (max-width:860px){.proj .note{margin-top:70px}.proj .art{margin-top:18px}}
+
+/* ===== component pass: match her components ===== */
+/* tools band: clean sans wordmarks, no separators */
+.marquee .track{gap:72px;align-items:center}
+.marquee span{font-family:var(--sans);font-weight:700;font-size:28px;letter-spacing:-.02em;color:#fff;gap:0}
+.marquee span::after{content:none}
+@media (max-width:860px){.marquee .track{gap:44px}.marquee span{font-size:22px}}
+
+/* "Built With" row in the style of her store buttons */
+.built{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:26px}
+.built-l{font-weight:700;font-size:13px;color:var(--maroon);margin-right:6px}
+.store{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--maroon);border-radius:10px;padding:5px 14px 5px 10px;background:transparent;color:var(--ink)}
+.store svg{width:20px;height:20px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.store span{display:grid;line-height:1.05;font-family:var(--serif);font-variation-settings:"SOFT" 100;font-size:16px}
+.store small{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.01em}
+@media (max-width:860px){.built{margin-top:20px;gap:10px}.store span{font-size:14px}}
+
+/* skills rows: bordered sheet with a faint brush texture, icon + bold label */
+.kit .row{background:#FCF9E5 url("/assets/images/paper/brush.webp") center/cover no-repeat;border:1.5px solid rgba(140,112,80,.45);border-radius:10px;box-shadow:0 4px 12px rgba(70,50,20,.15)}
+.kit .row h3{font-size:36px;font-weight:500}
+.kit ul{gap:16px 44px}
+.kit li{font-size:13px;font-weight:700;color:var(--ink);gap:10px}
+.kit li svg{width:18px;height:18px;color:var(--maroon);stroke-width:1.8}
+
+/* how I work: maroon titles, bigger dark icons with yellow sparks */
+.how h3{color:var(--maroon);font-size:24px}
+.how p{font-size:13px;font-weight:700;line-height:24px}
+.how .ic{position:relative;width:64px;height:64px;background:rgba(255,205,67,.32)}
+.how .ic svg{width:38px;height:38px;color:var(--ink);stroke-width:1.6}
+.how .ic::after{content:"";position:absolute;right:-12px;top:-14px;width:30px;height:30px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' fill='none' stroke='%23F5C342' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 22L2 26M14 14l2-11M20 19l8-4'/%3E%3C/svg%3E") no-repeat}
+
+/* sticky note text at her size */
+.note-card p{font-size:13px;line-height:22px;font-weight:600}
+.note-card footer{font-size:12px}
+.kit .num{color:var(--ink)}
