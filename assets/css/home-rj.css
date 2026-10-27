@@ -547,3 +547,136 @@ h1,.hero h1,.cs-hero h1{font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 48;le
   .band.tools{background-image:url("/assets/images/paper/band-short-m.webp")}
 }
 .polaroid{transform:none}
+
+/* ===== exact measurements from the reference (1512px window) ===== */
+@media (min-width:861px){
+  .wrap{max-width:calc(1304px + 64px)}
+  .top{padding:20px 0}
+  .badge{width:156px;height:65px;display:grid;place-items:center;padding:0;font-size:14px;font-weight:500;transform:none}
+  .menu a{font-size:16px;font-weight:700}
+  .top .btn{height:44px}
+  .btn{height:44px;padding:0 22px;font-size:18px;line-height:28px;border-radius:16px}
+  .hero{grid-template-columns:480px minmax(0,1fr);gap:60px;padding-top:152px;padding-bottom:60px;align-items:center}
+  .polaroid{padding:24px 26.4px 64.8px;border-radius:10px}
+  .polaroid .photo{aspect-ratio:427/517}
+  .hero h1{font-size:56px;line-height:65px;max-width:700px}
+  .hero p.lead{font-size:18px;font-weight:600;line-height:34.2px;max-width:528px;margin-top:24px}
+  .hero .ctas{gap:24px;margin-top:48px}
+  .band-wrap{max-width:1400px;padding:0 24px}
+  .tools{min-height:174px;padding:48px 80px;gap:60px}
+  .tools h2{font-size:18px;font-weight:600;line-height:22.5px;flex:0 0 208px}
+  .head p{font-size:16px;font-weight:700;line-height:30.4px}
+  .proj{min-height:631px;border-radius:20px}
+  .proj .copy{padding:52px 0 42px 70px}
+  .proj h3{font-size:81px;line-height:81px;font-weight:500}
+  .proj .kind{font-size:24px;font-weight:500;line-height:32px;max-width:456px}
+  .proj .desc{max-width:456px}
+  .proj .art{min-height:631px}
+  .proj .phone.p1{--pw:330px;left:4%;top:-89px}
+  .proj .phone.p2{--pw:315px;left:calc(4% + 250px);top:-20px}
+  .proj .browser.b1{left:4%;top:40px;width:94%}
+  .proj .browser.b2{left:10%;top:250px;width:94%}
+  .proj .note{left:41%;top:30%;width:130px}
+  .proof .band{min-height:360px;padding:60px 48px 60px 126px;display:grid;align-items:center}
+  .proof .band .grid{grid-template-columns:340px 1fr}
+  .head.light h2,.proof h2{font-size:48px;font-weight:500;line-height:48px}
+  .talk{padding:93px 24px 88px}
+  .talk h2{font-size:48px;line-height:72px;font-weight:500}
+  .foot .who b{font-size:18px;font-weight:500}
+}
+@media (min-width:861px) and (max-width:1250px){
+  .proj .phone.p1{--pw:270px;top:-60px}.proj .phone.p2{--pw:255px;left:calc(4% + 205px)}
+  .proj h3{font-size:64px;line-height:68px}
+}
+@media (max-width:860px){.proj .note{margin-top:56px}}
+.tools h2 .zigline{display:block;width:150px;height:28px;margin-top:10px}
+
+/* ===== vertical rhythm and component sizes measured from the reference ===== */
+body{font-weight:400;line-height:1.5}
+.btn{font-weight:400}
+.head h2{font-size:48px;font-weight:500;line-height:50px}
+.head .swipe{width:178px;height:17px;margin-top:6px}
+.head p{margin-top:13px;line-height:30.4px;font-weight:700;font-size:16px}
+@media (min-width:861px){
+  .hero{padding-bottom:108px}
+  .band-wrap{max-width:1400px;padding:0}
+  .tools{height:174px;min-height:0;padding:0 80px;align-items:center}
+  .tools h2{font-size:18px;line-height:22.5px}
+  .tools h2 .zigline{width:160px;height:25px;margin-top:8px}
+  section.block{padding-top:108px}
+  .projects{margin-top:141px;gap:155px}
+  .proof{padding-top:156px}
+  .proof .band{min-height:360px}
+  .proof .band .grid{grid-template-columns:336px max-content;gap:32px;justify-content:start}
+  .proof ul{grid-template-columns:repeat(4,198px);gap:0}
+  .proof li{min-height:122px;display:grid;justify-items:center;align-content:center}
+  .kit{gap:24px;margin-top:56px}
+  .kit .row{min-height:172px;padding:32px 48px;box-sizing:border-box}
+  .how{grid-template-columns:404px minmax(0,1fr);gap:0}
+  .how .head p{max-width:240px;line-height:30px}
+  .how ol{gap:24px}
+  .how li{min-height:168px;padding:32px 40px}
+  .grid-paper{background:none;margin-top:100px;padding:0}
+  .grid-paper > .wrap{max-width:1304px;padding:80px 59px 90px;background:#FFFFE0 url("/assets/images/paper/grid.jpg") repeat;background-size:480px}
+  .notes{grid-template-columns:repeat(3,326px);justify-content:space-between;gap:0;margin-top:56px}
+  .note-card{padding:24px 20px 20px;min-height:208px}
+  .talk{min-height:497px;padding:93px 24px 88px;margin-top:100px}
+  .talk h2{max-width:560px;margin:0 auto}
+  .talk p{font-size:18px;font-weight:700;line-height:34px;max-width:560px;margin:16px auto 40px}
+}
+.proj h3{max-width:456px}
+@media (min-width:861px) and (max-width:1340px){.proj .note{display:none}}
+@media (max-width:860px){.proj .note{width:max-content;max-width:70%;margin-top:60px}.proj .art{margin-top:6px}}
+
+/* ===== exact phone measurements from the reference (390px) ===== */
+@media (max-width:860px){
+  .wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .top{padding:20px 0}
+  .badge{width:156px;height:65px;display:grid;place-items:center;padding:0;font-size:14px;font-weight:500;transform:none}
+  .burger{width:65px;height:32px;display:grid;place-items:center}
+  .burger svg{width:49px;height:16px}
+  .hero{padding-top:152px;padding-bottom:60px;gap:60px}
+  .hero h1{font-size:24px;line-height:28.8px;font-weight:400}
+  .hero p.lead{font-size:13px;font-weight:600;line-height:24.7px;margin-top:12px}
+  .hero .ctas{flex-direction:column;align-items:flex-start;gap:24px;margin-top:24px}
+  .btn,.hero .ctas .btn{height:33px;padding:0 16px;font-size:15px;line-height:22.5px;border-radius:12px}
+  .polaroid{padding:17.15px 18.86px 46.3px;border-radius:10px}
+  .polaroid .photo{aspect-ratio:305/369}
+  .polaroid figcaption{bottom:12px;font-size:17px}
+  .band-wrap{padding:0;max-width:none}
+  .tools{min-height:198px;padding:36px 32px;gap:18px}
+  .tools h2{font-size:16px;font-weight:600;line-height:20px}
+  .tools h2 .zigline{width:120px;height:20px;margin-top:8px}
+  .marquee span{font-size:26px}
+  .head h2,.chap h2{font-size:28px;line-height:30px;font-weight:500}
+  .head .swipe{width:120px;height:12px}
+  .head p{font-size:13px;line-height:24px}
+  section.block{padding-top:64px}
+  .projects{margin-top:48px;gap:48px}
+  .proj{border-radius:20px;min-height:0}
+  .proj .copy{padding:34px 26px 0}
+  .proj h3{font-size:48px;line-height:48px;font-weight:500}
+  .proj .kind{font-size:16px;font-weight:500;line-height:24px;margin-top:14px}
+  .proj .desc{font-size:13px;line-height:22px}
+  .proj .role-l{font-size:16px}.proj .role{font-size:16px}
+  .proj .btn{margin-top:22px}
+  .proj .note{font-size:16px;margin:34px 0 0 30px}
+  .proj .note svg{width:56px;height:38px;margin-left:90px}
+  .proj .art{min-height:330px;margin-top:4px}
+  .proj .phone.p1{--pw:162px;left:26px;top:20px}
+  .proj .phone.p2{--pw:162px;left:auto;right:30px;top:34px;transform:rotate(12deg)}
+  .proj .browser.b1{left:26px;top:24px;width:118%}
+  .proj .browser.b2{left:60px;top:140px;width:118%}
+  .proj .browser.b2:first-child{left:120px;top:90px;width:120%}
+  .proof .band{padding:56px 24px}
+  .head.light h2,.proof h2{font-size:28px;line-height:28px}
+  .kit .row h3{font-size:28px}
+  .how h3{font-size:20px}
+  .grid-paper{margin-top:60px}
+  .talk{padding:93px 16px 88px;min-height:563px}
+  .talk h2{font-size:34px;line-height:51px;font-weight:500}
+  .talk p{font-size:13px;line-height:24px}
+  .foot .who b{font-size:18px;font-weight:500}
+  .cs-hero h1{font-size:24px;line-height:28.8px}
+}
+@media (max-width:860px){.proj .note{margin-top:70px}.proj .art{margin-top:18px}}
