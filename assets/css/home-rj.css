@@ -546,3 +546,4 @@ h1,.hero h1,.cs-hero h1{font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 48;le
   .band{background-image:url("/assets/images/paper/band-tall-m.webp")}
   .band.tools{background-image:url("/assets/images/paper/band-short-m.webp")}
 }
+.polaroid{transform:none}

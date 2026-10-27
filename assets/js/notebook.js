@@ -72,7 +72,7 @@
       var ctas = hero.querySelectorAll('.ctas .btn');
       if (ctas.length) tl.from(ctas, { y: 24, opacity: 0, duration: 0.8, stagger: 0.1 }, 0.85);
       var pol = hero.querySelector('.polaroid');
-      if (pol) tl.from(pol, { y: 70, rotation: -9, opacity: 0, duration: 1.4, ease: 'expo.out' }, 0.1);
+      if (pol) tl.fromTo(pol, { y: 70, rotation: -7, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 1.4, ease: 'expo.out' }, 0.1);
       var tag = hero.querySelector('.cs-tag');
       if (tag) tl.from(tag, { y: -40, rotation: 6, opacity: 0, duration: 1.2, ease: 'back.out(1.6)' }, 0.5);
       hero.querySelectorAll('.swipe').forEach(function (sv) { drawStroke(sv, 1.0); });
@@ -118,7 +118,8 @@
     });
 
     /* everything else eases up as it arrives */
-    ScrollTrigger.batch('.rv', {
+    var rvs = gsap.utils.toArray('.rv').filter(function (el) { return !el.closest('.hero, .cs-hero'); });
+    ScrollTrigger.batch(rvs, {
       start: 'top 90%', once: true,
       onEnter: function (b) { gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.12, overwrite: true }); }
     });
