@@ -451,3 +451,6 @@ h1,.hero h1,.cs-hero h1{font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 48;le
 .proj .note{left:33%;top:26%}
 .polaroid,.note-card,.steps li{transition:none}
 .polaroid:hover,.note-card:hover{transform:none}
+.proj .note{left:39%;top:30%;width:140px;font-size:16px}
+.proj .note svg{margin-left:50px;width:60px}
+@media (max-width:1100px){.proj .note{display:none}}
