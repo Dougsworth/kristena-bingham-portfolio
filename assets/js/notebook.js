@@ -25,6 +25,8 @@
     });
   }
 
+  document.addEventListener('kb:menu', function (e) { if (lenis) { e.detail ? lenis.stop() : lenis.start(); } });
+
   /* header tucks away on the way down, returns on the way up */
   var top = document.querySelector('.top'), lastY = 0;
   function onScroll(y) {
@@ -53,6 +55,7 @@
   function init() {
     /* hero: headline lines rise out of their masks, then copy, buttons and the photo */
     var hero = document.querySelector('.hero, .cs-hero');
+    function playHero() {
     if (hero) {
       var heroRv = hero.querySelectorAll('.rv');
       gsap.set(heroRv, { opacity: 1, y: 0 });
@@ -73,6 +76,30 @@
       var tag = hero.querySelector('.cs-tag');
       if (tag) tl.from(tag, { y: -40, rotation: 6, opacity: 0, duration: 1.2, ease: 'back.out(1.6)' }, 0.5);
       hero.querySelectorAll('.swipe').forEach(function (sv) { drawStroke(sv, 1.0); });
+    }
+    }
+
+    /* opening screen: her name card, the scribble draws, then the panel lifts away */
+    var intro = document.querySelector('.intro');
+    var introOn = intro && getComputedStyle(intro).display !== 'none';
+    if (introOn) {
+      if (hero) gsap.set(hero.querySelectorAll('.rv'), { opacity: 0 });
+      if (lenis) lenis.stop();
+      var zig = intro.querySelector('.zig path'), zl = zig.getTotalLength();
+      gsap.set(zig, { strokeDasharray: zl, strokeDashoffset: zl, opacity: 0 });
+      gsap.timeline()
+        .from('.intro-name', { yPercent: 40, opacity: 0, duration: 0.8, ease: 'power3.out' })
+        .set(zig, { opacity: 1 }, '-=0.25').to(zig, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, '<')
+        .to('.intro-in', { y: -30, opacity: 0, duration: 0.5, ease: 'power2.in' }, '+=0.35')
+        .to(intro, { yPercent: -100, duration: 0.95, ease: 'power4.inOut' }, '-=0.15')
+        .add(function () {
+          intro.style.display = 'none';
+          try { sessionStorage.setItem('kb-intro', '1'); } catch (e) {}
+          if (lenis) lenis.start();
+        })
+        .add(playHero, '-=0.55');
+    } else {
+      playHero();
     }
 
     /* section headings reveal line by line */

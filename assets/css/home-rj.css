@@ -67,7 +67,6 @@ h1,h2,h3,h4{font-family:var(--serif);font-variation-settings:"SOFT" 100,"WONK" 0
 .menu a.on .swipe,.menu a:hover .swipe{opacity:1}
 .burger{display:none;background:none;border:0;color:var(--maroon);width:40px;height:40px}
 .burger svg{width:28px;height:28px}
-.drawer{display:none}
 
 /* hero */
 .hero{padding-top:150px;padding-bottom:70px;display:grid;grid-template-columns:480px 1fr;gap:64px;align-items:center}
@@ -212,8 +211,6 @@ section.block{padding-top:110px;padding-bottom:40px}
 }
 @media (max-width:860px){
   .menu,.top .btn{display:none}.burger{display:block}
-  .drawer.open{display:block;position:fixed;inset:86px 0 auto;z-index:39;background:var(--paper);border-bottom:1.5px solid var(--line);padding:20px 32px 28px}
-  .drawer a{display:block;font-weight:700;color:var(--maroon);padding:10px 0;font-size:18px}
   .wrap{padding:0 16px}
   .hero{grid-template-columns:1fr;padding-top:130px;gap:48px}.polaroid{width:100%;max-width:360px;margin:20px auto 0}
   .hero h1{font-size:38px}
@@ -454,3 +451,98 @@ h1,.hero h1,.cs-hero h1{font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 48;le
 .proj .note{left:39%;top:30%;width:140px;font-size:16px}
 .proj .note svg{margin-left:50px;width:60px}
 @media (max-width:1100px){.proj .note{display:none}}
+
+/* ===== opening screen (her maroon name card) ===== */
+.intro{display:none;position:fixed;inset:0;z-index:100;background:#491413;place-items:center;padding:0 24px}
+.js:not(.intro-seen) .intro{display:grid}
+.intro-in{display:grid;justify-items:center;gap:6px}
+.intro-name{font-family:var(--serif);font-variation-settings:"SOFT" 100,"WONK" 0,"opsz" 48;font-weight:650;color:#FDFEBA;font-size:clamp(34px,7vw,64px);line-height:1.1;letter-spacing:-.005em;text-align:center}
+.zig{width:min(64vw,300px);height:auto;color:#F5C342}
+.zig path{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== full screen menu ===== */
+.burger{display:none;background:none;border:0;color:var(--maroon);width:58px;height:40px;padding:0;cursor:pointer}
+.burger svg{width:58px;height:24px}
+.drawer{position:fixed;inset:0;z-index:60;background:#491413;color:#FDFEBA;display:grid;align-content:center;justify-items:start;gap:34px;
+  padding:110px max(28px,env(safe-area-inset-right,0px)) 60px max(28px,env(safe-area-inset-left,0px));
+  opacity:0;visibility:hidden;transform:translateY(-12px);transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1),visibility 0s .45s}
+.drawer.open{opacity:1;visibility:visible;transform:none;transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1)}
+.drawer nav{display:grid;gap:10px}
+.drawer nav a{font-family:var(--serif);font-variation-settings:"SOFT" 100,"opsz" 48;font-weight:450;font-size:40px;line-height:1.2;color:#FDFEBA;padding:2px 0}
+.drawer nav a:hover{color:#F5C342}
+.drawer .btn{margin-top:6px}
+.drawer-mail{font-weight:700;color:#F5C342;user-select:all}
+.drawer-x{position:absolute;top:calc(28px + env(safe-area-inset-top,0px));right:max(24px,env(safe-area-inset-right,0px));width:44px;height:44px;background:none;border:0;color:#FDFEBA;cursor:pointer;padding:6px}
+.menu-open{overflow:hidden}
+
+/* ===== mobile, following her phone layout ===== */
+@media (max-width:860px){
+  .wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+  .top{padding:16px 0}
+  .top .btn,.menu{display:none}
+  .burger{display:block}
+  .badge{font-size:17px;padding:22px 34px;transform:rotate(-1.5deg)}
+
+  /* hero: words first, then the taped polaroid full width */
+  .hero{display:flex;flex-direction:column-reverse;align-items:stretch;gap:56px;padding-top:120px;padding-bottom:30px}
+  .hero h1{font-size:clamp(30px,8.2vw,40px);line-height:1.2}
+  .hero p.lead{font-size:15px;line-height:2.1;margin-top:18px}
+  .hero .ctas{gap:14px;margin-top:26px;flex-wrap:nowrap}
+  .hero .ctas .btn{font-size:17px;padding:12px 18px;white-space:nowrap}
+  .polaroid{width:100%;max-width:none;margin:0;padding:22px 22px 58px;transform:none}
+  .polaroid .photo{aspect-ratio:5/6}
+
+  /* full bleed torn band */
+  .band-wrap{padding:0}
+  .hero + .band-wrap{margin-top:30px}
+  .tools{flex-direction:column;align-items:flex-start;gap:22px;padding:42px 26px 40px}
+  .tools h2{font-size:22px;flex:none}
+  .marquee span{font-size:32px}
+
+  /* featured projects: note points down at big phones cropped by the card */
+  section.block{padding-top:90px}
+  .head h2{font-size:42px;line-height:1.08}
+  .projects{gap:56px;margin-top:56px}
+  .proj{grid-template-columns:1fr;overflow:hidden;min-height:0;border-radius:20px}
+  .proj .copy{padding:40px 26px 0}
+  .proj h3{font-size:58px}
+  .proj .kind{font-size:24px}
+  .proj .desc{font-size:15px}
+  .proj .note{display:block;position:relative;left:auto;top:auto;width:auto;margin:34px 0 0 28px;font-size:19px;transform:rotate(-12deg);transform-origin:left center}
+  .proj .note svg{display:block;width:70px;height:46px;margin:2px 0 0 110px}
+  .proj .art{min-height:520px;margin:0}
+  .proj .phone.p1{--pw:min(62vw,250px);left:6%;top:24px}
+  .proj .phone.p2{--pw:min(58vw,236px);left:auto;right:-6%;top:44px;transform:rotate(11deg)}
+  .proj .browser.b1{left:6%;top:30px;width:110%}
+  .proj .browser.b2{left:12%;top:200px;width:110%}
+  .proj .browser.b2:first-child{left:24%;top:130px;width:120%}
+
+  /* bands, kit, process, notes */
+  .proof .band{padding:64px 30px}
+  .proof .band .grid{grid-template-columns:1fr;gap:34px}
+  .proof ul{grid-template-columns:1fr 1fr;gap:30px 18px}
+  .kit .row{grid-template-columns:1fr;padding:26px 22px}
+  .how li{grid-template-columns:56px 1fr;padding:24px 20px}
+  .grid-paper{margin-top:60px;padding:80px 0 90px}
+  .notes{gap:44px}
+  .note-card{padding:30px 24px 26px}
+  .talk{padding:90px 22px 100px}
+  .talk h2{font-size:34px;line-height:1.4}
+  .foot .row{flex-direction:column;align-items:flex-start;gap:26px}
+
+  /* case studies */
+  .cs-hero{padding-top:118px}
+  .cs-hero h1{font-size:clamp(28px,7.6vw,38px);line-height:1.25}
+  .cs-band{padding:30px 0;border-radius:0;margin:0 calc(-1 * max(18px,env(safe-area-inset-left,0px)))}
+  .cs-band .phones{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 24px 30px;gap:22px}
+  .cs-band .phones .phone{--pw:62vw;flex:0 0 auto;scroll-snap-align:center;display:block}
+  .cs-band .phones .phone:nth-child(n+3){display:block}
+  .cs-band .phones .phone:nth-child(even){transform:none}
+  .cs-band .browser{width:calc(100% - 32px)}
+  .chap h2{font-size:28px}
+}
+@media (max-width:380px){.hero .ctas{flex-wrap:wrap}.badge{font-size:15px;padding:20px 28px}}
+@media (max-width:860px){
+  .band{background-image:url("/assets/images/paper/band-tall-m.webp")}
+  .band.tools{background-image:url("/assets/images/paper/band-short-m.webp")}
+}
